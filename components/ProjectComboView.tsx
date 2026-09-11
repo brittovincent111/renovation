@@ -57,7 +57,7 @@ export function ProjectComboView({ slug }: ProjectComboViewProps) {
           (b) => `• [${b.category}] ${b.material}: ${b.quantity} ${b.unit} (${b.estimatedCostRange}) - ${b.details || ''}`
         ),
         '',
-        'Generated with RenovationCalculator (https://renovationcalculator.org)',
+        'Generated with RenovationCalculator (https://renovationcalculator.online)',
       ];
       await navigator.clipboard.writeText(lines.join('\n'));
       setCopied(true);
@@ -65,7 +65,7 @@ export function ProjectComboView({ slug }: ProjectComboViewProps) {
     } catch {}
   };
 
-  const currentUrl = `https://buildcalc.io/projects/${project.slug}`;
+  const currentUrl = `https://renovationcalculator.online/projects/${project.slug}`;
 
   return (
     <div className="min-h-screen bg-white text-[#263238] pb-20">

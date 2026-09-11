@@ -53,7 +53,7 @@ export function CalculatorLayout({
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
 
-  const currentUrl = `https://buildcalc.io/calculators/${slug}`;
+  const currentUrl = `https://renovationcalculator.online/calculators/${slug}`;
 
   return (
     <div className="min-h-screen bg-white text-[#263238]">

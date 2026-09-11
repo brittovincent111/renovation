@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = `${calc.name} ${reg.metaSuffix}`;
   const description = `${calc.description} Tailored for ${reg.name} construction standards, metric units (${reg.unitName}), and local material conventions.`;
-  const canonicalUrl = `https://buildcalc.io/calculators/${calc.slug}/${region}`;
+  const canonicalUrl = `https://renovationcalculator.online/calculators/${calc.slug}/${region}`;
 
   return {
     title,

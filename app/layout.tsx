@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://buildcalc.io'),
+  metadataBase: new URL('https://renovationcalculator.online'),
   title: {
     default: 'RenovationCalculator — Free Home Renovation & Material Calculators',
     template: '%s | RenovationCalculator',
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://buildcalc.io',
+    url: 'https://renovationcalculator.online',
     siteName: 'RenovationCalculator',
     title: 'RenovationCalculator — Free Home Renovation & Construction Calculators',
     description:

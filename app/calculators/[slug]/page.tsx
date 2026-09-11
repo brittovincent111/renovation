@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const canonicalUrl = `https://buildcalc.io/calculators/${calc.slug}`;
+  const canonicalUrl = `https://renovationcalculator.online/calculators/${calc.slug}`;
 
   return {
     title: calc.metaTitle,

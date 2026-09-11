@@ -39,10 +39,10 @@ export default function ContactPage() {
             <h2 className="text-sm font-bold text-[#263238]">Direct Email</h2>
             <p className="mt-1 text-xs text-charcoal-500">For partnership, press, or feedback</p>
             <a
-              href="mailto:contact@renovationcalculator.org"
+              href="mailto:contact@renovationcalculator.online"
               className="mt-2 inline-block text-xs font-semibold text-terracotta hover:underline"
             >
-              contact@renovationcalculator.org
+              contact@renovationcalculator.online
             </a>
           </div>
 

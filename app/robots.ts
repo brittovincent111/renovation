@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/'],
     },
-    sitemap: 'https://buildcalc.io/sitemap.xml',
+    sitemap: 'https://renovationcalculator.online/sitemap.xml',
   };
 }

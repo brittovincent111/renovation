@@ -83,8 +83,8 @@ export default function PrivacyPolicyPage() {
           <h2 className="text-xl font-bold text-[#263238] mb-2">6. Contact Us</h2>
           <p>
             If you have questions or suggestions regarding our Privacy Policy or data security practices, please contact us at{' '}
-            <a href="mailto:support@renovationcalculator.org" className="text-terracotta underline font-medium hover:text-terracotta-700">
-              support@renovationcalculator.org
+            <a href="mailto:support@renovationcalculator.online" className="text-terracotta underline font-medium hover:text-terracotta-700">
+              support@renovationcalculator.online
             </a>
             .
           </p>

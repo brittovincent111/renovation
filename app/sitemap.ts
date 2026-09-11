@@ -3,7 +3,7 @@ import { ALL_CALCULATORS } from '@/lib/calculatorList';
 import { PROJECT_COMBOS } from '@/lib/projectsData';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://buildcalc.io';
+  const baseUrl = 'https://renovationcalculator.online';
   const lastModified = new Date();
 
   // Core pages
