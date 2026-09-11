@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@theme {
+  --color-charcoal: #263238;
+  --color-charcoal-50: #f4f6f7;
+  --color-charcoal-100: #e5e9eb;
+  --color-charcoal-200: #cbd3d7;
+  --color-charcoal-300: #a2b1b8;
+  --color-charcoal-400: #718792;
+  --color-charcoal-500: #546e7a;
+  --color-charcoal-600: #455a64;
+  --color-charcoal-700: #37474f;
+  --color-charcoal-800: #2c373e;
+  --color-charcoal-900: #263238;
+  --color-charcoal-950: #1a2327;
+
+  --color-terracotta: #e76f51;
+  --color-terracotta-50: #fdf6f4;
+  --color-terracotta-100: #fcece7;
+  --color-terracotta-200: #f9d8ce;
+  --color-terracotta-300: #f4b8a7;
+  --color-terracotta-400: #ee927b;
+  --color-terracotta-500: #e76f51;
+  --color-terracotta-600: #d45131;
+  --color-terracotta-700: #b23f24;
+  --color-terracotta-800: #923722;
+  --color-terracotta-900: #7a3221;
+  --color-terracotta-950: #42160c;
+
+  --color-warm-white: #fffcf9;
+  --color-warm-50: #fffcf9;
+  --color-warm-100: #fcf8f3;
+  --color-warm-200: #f8f1e7;
+
+  /* Theme fallback mapping from previous emerald accents to terracotta */
+  --color-emerald-50: #fdf6f4;
+  --color-emerald-100: #fcece7;
+  --color-emerald-200: #f9d8ce;
+  --color-emerald-300: #f4b8a7;
+  --color-emerald-400: #ee927b;
+  --color-emerald-500: #e76f51;
+  --color-emerald-600: #e76f51;
+  --color-emerald-700: #d45131;
+  --color-emerald-800: #b23f24;
+  --color-emerald-900: #7a3221;
+  --color-emerald-950: #42160c;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #263238;
+}
+
+body {
+  background: #ffffff;
+  color: #263238;
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  min-height: 100vh;
+}
+
+/* Custom form inputs & scrollbars */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Print Optimization Stylesheet for PDF & physical print */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 12pt;
+  }
+
+  header,
+  footer,
+  .print\:hidden,
+  .ad-slot-wrapper,
+  #cookie-consent-banner,
+  #header-search-trigger,
+  button {
+    display: none !important;
+  }
+
+  #result-card-container {
+    border: 2px solid #e76f51 !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin: 20px 0 !important;
+  }
+
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+}
