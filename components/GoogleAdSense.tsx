@@ -1,20 +1,16 @@
-'use client';
-
-import Script from 'next/script';
-
 export function GoogleAdSense() {
-  const clientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+  const clientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || 'ca-pub-8375917458612454';
 
   if (!clientId || clientId.includes('XXXXXXXXXXXXXXXX')) {
     return null;
   }
 
   return (
-    <Script
-      id="google-adsense"
+    <script
+      async
       src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}`}
-      strategy="afterInteractive"
       crossOrigin="anonymous"
     />
   );
 }
+
