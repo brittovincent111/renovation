@@ -2,18 +2,32 @@ import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getCalculatorBySlug } from '@/lib/calculatorList';
-import { getRegionalContent } from '@/lib/regionalContent';
+import { getRegionalContent, hasRegionalContent } from '@/lib/regionalContent';
 import { CalculatorEngineView } from '@/components/CalculatorEngineView';
 
 interface PageProps {
   params: Promise<{ slug: string; region: string }>;
 }
 
+/**
+ * Calculators that get regional variants. Restricted to trades where local
+ * product sizes, standards or units genuinely differ — a regional page with
+ * nothing region-specific to say is a duplicate, not an extra page.
+ */
 const REGIONAL_CALCULATORS = [
   'tile-calculator',
   'concrete-calculator',
   'paint-calculator',
   'flooring-calculator',
+  'false-ceiling-calculator',
+  'brick-calculator',
+  'roofing-calculator',
+  'insulation-calculator',
+  'plumbing-pipe-calculator',
+  'drywall-calculator',
+  'wallpaper-calculator',
+  'fence-calculator',
+  'gravel-calculator',
 ];
 
 const REGIONAL_VARIANTS: Record<
@@ -34,12 +48,22 @@ const REGIONAL_VARIANTS: Record<
     currency: '₹',
     metaSuffix: 'India — Metric (m²) & Construction Material Estimator',
   },
+  australia: {
+    name: 'Australia',
+    flag: '🇦🇺',
+    unitName: 'Metric (Square Metres, Litres & 20kg Bags)',
+    currency: 'A$',
+    metaSuffix: 'Australia — Metric (m²) & AS/NZS Standard Estimator',
+  },
 };
 
 export async function generateStaticParams() {
   const params: Array<{ slug: string; region: string }> = [];
   for (const slug of REGIONAL_CALCULATORS) {
     for (const region of Object.keys(REGIONAL_VARIANTS)) {
+      // A combination without its own copy would render the parent calculator's
+      // text verbatim — a duplicate page, not an extra one. Skip until written.
+      if (!hasRegionalContent(slug, region)) continue;
       params.push({ slug, region });
     }
   }
@@ -83,7 +107,7 @@ export default async function RegionalCalculatorPage({ params }: PageProps) {
   const calc = getCalculatorBySlug(slug);
   const reg = REGIONAL_VARIANTS[region];
 
-  if (!calc || !reg || !REGIONAL_CALCULATORS.includes(slug)) {
+  if (!calc || !reg || !REGIONAL_CALCULATORS.includes(slug) || !hasRegionalContent(slug, region)) {
     notFound();
   }
 

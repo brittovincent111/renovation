@@ -200,6 +200,9 @@ export function CalculatorLayout({
           </div>
         </section>
 
+        {/* 6b. POST-EXPLANATION AD SLOT */}
+        <AdSlot position="post-explanation" slotKey="calculator-post-explanation" />
+
         {/* 7. SECONDARY CONTENT / RELATED CALCULATORS (§11) */}
         <RelatedCalculators currentSlug={slug} />
 

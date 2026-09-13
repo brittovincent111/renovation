@@ -26,7 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Regional variant routes
   const regionalRoutes: MetadataRoute.Sitemap = [];
-  const topSlugs = ['tile-calculator', 'concrete-calculator', 'paint-calculator', 'flooring-calculator'];
+  const topSlugs = ['tile-calculator', 'concrete-calculator', 'paint-calculator', 'flooring-calculator', 'false-ceiling-calculator'];
   for (const slug of topSlugs) {
     for (const region of ['uk', 'india']) {
       regionalRoutes.push({
@@ -38,7 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
-  // 5 Project combo routes
+  // Project combo routes
   const projectRoutes: MetadataRoute.Sitemap = Object.keys(PROJECT_COMBOS).map((slug) => ({
     url: `${baseUrl}/projects/${slug}`,
     lastModified,
@@ -46,11 +46,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.95,
   }));
 
-  // 3 Guide routes
+  // Guide routes
   const guideRoutes: MetadataRoute.Sitemap = [
     { url: `${baseUrl}/guides/how-to-tile-a-bathroom-floor`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/guides/how-much-does-a-bathroom-renovation-cost`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/guides/concrete-vs-pavers`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/guides/flat-renovation-cost-guide`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
   ];
 
   return [...staticRoutes, ...projectRoutes, ...calculatorRoutes, ...regionalRoutes, ...guideRoutes];
