@@ -86,12 +86,27 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Legal & Compliance */}
+          {/* Resources & Legal */}
           <div>
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#263238] mb-3">
-              Company & Legal
+              Resources & Legal
             </h4>
             <ul className="space-y-2 text-xs">
+              <li>
+                <Link href="/projects" className="text-charcoal-600 hover:text-terracotta transition-colors">
+                  Project Combo Estimators
+                </Link>
+              </li>
+              <li>
+                <Link href="/guides" className="text-charcoal-600 hover:text-terracotta transition-colors">
+                  DIY Renovation Guides
+                </Link>
+              </li>
+              <li>
+                <Link href="/guides/flat-renovation-cost-guide" className="text-charcoal-600 hover:text-terracotta transition-colors">
+                  Flat Renovation Cost Guide
+                </Link>
+              </li>
               <li>
                 <Link href="/about" className="text-charcoal-600 hover:text-terracotta transition-colors">
                   About RenovationCalculator

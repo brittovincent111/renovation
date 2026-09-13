@@ -118,7 +118,7 @@ export default function HomePage() {
             {/* Quick Pills */}
             <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-charcoal-500">
               <span className="font-semibold text-charcoal-400">Popular:</span>
-              {['Tile', 'Concrete', 'Paint', 'Drywall', 'Roofing', 'Flooring', 'Fence', 'Deck'].map((name) => (
+              {['Tile', 'House Renovation', 'Ceiling', 'Epoxy', 'Loan', 'Paint', 'Flooring', 'Concrete', 'Deck'].map((name) => (
                 <button
                   key={name}
                   type="button"
@@ -173,10 +173,10 @@ export default function HomePage() {
 
             <div className="flex flex-wrap gap-3">
               <Link
-                href="/projects/bathroom-renovation-cost"
+                href="/projects/house-renovation-cost"
                 className="px-5 py-2.5 rounded-xl bg-terracotta hover:bg-terracotta-600 text-white text-xs sm:text-sm font-bold shadow-md transition-colors"
               >
-                Bathroom Remodel →
+                Whole House Remodel →
               </Link>
               <Link
                 href="/projects/kitchen-renovation-cost"
@@ -185,10 +185,16 @@ export default function HomePage() {
                 Kitchen Remodel
               </Link>
               <Link
+                href="/projects/bathroom-renovation-cost"
+                className="px-4 py-2.5 rounded-xl bg-charcoal-800 hover:bg-charcoal-700 text-white text-xs sm:text-sm font-semibold border border-charcoal-700 transition-colors"
+              >
+                Bathroom Remodel
+              </Link>
+              <Link
                 href="/projects"
                 className="px-4 py-2.5 rounded-xl bg-charcoal-800 hover:bg-charcoal-700 text-white text-xs sm:text-sm font-semibold border border-charcoal-700 transition-colors"
               >
-                View All 5 Combos
+                View All 6 Combos
               </Link>
             </div>
           </div>
@@ -230,7 +236,7 @@ export default function HomePage() {
         <p className="-mt-6 mb-10 text-xs sm:text-sm text-charcoal-500">
           Planning bigger energy upgrades?{' '}
           <a
-            href="https://solarcalculator.online"
+            href="https://solarpaybackcalculator.online"
             className="font-semibold text-terracotta underline underline-offset-2 hover:text-terracotta-700"
           >
             Check our Solar Payback Calculator

@@ -11,6 +11,7 @@ export type AdSlotKey =
   | 'calculator-top'
   | 'calculator-post-result'
   | 'calculator-content'
+  | 'calculator-post-explanation'
   | 'calculator-bottom'
   | 'project-top'
   | 'project-post-result'
@@ -42,6 +43,11 @@ export const adConfig: Record<AdSlotKey, AdSlotMeta> = {
     enabled: true,
     location: 'Calculators: Below 2-column form & sticky result',
     description: 'Post-calculation break before formula explanation',
+  },
+  'calculator-post-explanation': {
+    enabled: true,
+    location: 'Calculators: Between the formula explanation and related tools',
+    description: 'Mid-page break at a content boundary, well below the result',
   },
   'calculator-content': {
     enabled: true,

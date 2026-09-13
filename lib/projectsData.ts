@@ -378,4 +378,138 @@ export const PROJECT_COMBOS: Record<string, ProjectComboConfig> = {
       };
     },
   },
+
+  'house-renovation-cost': {
+    slug: 'house-renovation-cost',
+    title: 'Whole House & Flat Renovation Cost Calculator',
+    shortTitle: 'Whole House & Flat',
+    tagline: 'Calculate renovation costs per square foot, room-by-room material bills, and labor budgets for whole houses, apartments, and 2BHK/3BHK flats.',
+    description: 'Free house renovation cost calculator. Estimate renovation costs per square foot for whole homes, townhouses, and 2BHK/3BHK flats. Computes flooring, interior paint, drywall repairs, baseboard trim, lighting, plumbing, and contingency reserves across Budget, Standard, and Premium quality tiers.',
+    metaTitle: 'House Renovation Cost Calculator - Renovation Costs Per Square Foot & 2BHK Estimator',
+    metaDescription: 'Free house renovation cost calculator. Estimate total remodel cost and renovation costs per square foot for whole houses, apartments, and 2BHK flats with itemized materials and labor.',
+    defaultDimensions: { length: 40, width: 30, height: 9 },
+    subCalculators: ['Flooring', 'Interior Paint', 'Drywall & Walls', 'Trim & Baseboards', 'Kitchen & Bath', 'Electrical & Plumbing'],
+    linkedCalculators: ['flooring-calculator', 'paint-calculator', 'drywall-calculator', 'baseboard-calculator', 'tile-calculator', 'kitchen-renovation-cost', 'bathroom-renovation-cost'],
+    faqs: [
+      {
+        question: 'What is the average house renovation cost per square foot in 2026?',
+        answer: 'Average renovation costs range from $25 to $60 per square foot for cosmetic updates (fresh paint, new LVP flooring, light fixtures, cabinet refacing), $60 to $130 per square foot for mid-range renovations (new kitchen, updated bathrooms, trim, partial rewiring), and $150 to $250+ per square foot for a complete gut remodel or structural renovation.',
+      },
+      {
+        question: 'How much does it cost to renovate a 2BHK or 3BHK flat?',
+        answer: 'A standard 2BHK flat (800–1,000 sq ft) typically costs $20,000–$55,000 in North America or £15,000–£40,000 in the UK for a moderate refresh. In India, 2BHK flat renovation costs typically range between ₹5 Lakhs to ₹14 Lakhs (₹650 to ₹1,400 per sq ft for basic-to-standard civil, modular kitchen, electrical, and painting, up to ₹1,800–₹2,500+ per sq ft for premium interiors).',
+      },
+      {
+        question: 'What is the most expensive part of a house renovation?',
+        answer: 'Kitchens and bathrooms represent the highest cost per square foot due to plumbing rough-ins, waterproof membranes, custom cabinetry, quartz/granite stone countertops, tilework, and high-end fixtures.',
+      },
+      {
+        question: 'How much contingency buffer should I include in a renovation budget?',
+        answer: 'Always reserve 15% to 20% beyond your base material and contractor quotes for unexpected issues like hidden water damage, outdated wiring, subfloor leveling, or plumbing code upgrades.',
+      },
+      {
+        question: 'Can I use this calculator for flat or apartment renovations?',
+        answer: 'Yes. Input your apartment interior carpet area or dimensions (e.g. 30x30 ft for a 900 sq ft 2BHK flat). The model calculates non-structural interior finishes including flooring, paint, doors, trim, lighting, and plumbing fixtures.',
+      },
+    ],
+    calculate: (dim, unit) => {
+      const isMetric = unit === 'metric';
+      const l = isMetric ? dim.length * 3.28084 : dim.length;
+      const w = isMetric ? dim.width * 3.28084 : dim.width;
+      const h = isMetric ? dim.height * 3.28084 : dim.height;
+
+      const floorArea = l * w;
+      const perimeter = 2 * (l + w);
+      const totalWallLinearFt = perimeter * 2.5;
+      const totalWallArea = Math.round(totalWallLinearFt * h * 0.85);
+
+      const mult = dim.quality === 'budget' ? 0.75 : dim.quality === 'premium' ? 1.75 : 1.0;
+
+      const sqFtRateMin = Math.round(dim.quality === 'budget' ? 28 : dim.quality === 'premium' ? 110 : 55);
+      const sqFtRateMax = Math.round(dim.quality === 'budget' ? 58 : dim.quality === 'premium' ? 220 : 115);
+
+      const flooringBoxes = Math.ceil((floorArea * 1.1) / 20);
+      const paintGallons = Math.ceil(totalWallArea / 350) * 2;
+      const drywallSheets = Math.ceil((floorArea * 0.3) / 32);
+      const baseboardFt = Math.round(totalWallLinearFt * 0.9);
+
+      const bom: ProjectBOMItem[] = [
+        {
+          category: 'Flooring',
+          material: dim.quality === 'premium' ? 'Hardwood / Large Format Porcelain' : 'Luxury Vinyl Plank (LVP) / Laminate',
+          quantity: flooringBoxes,
+          unit: 'boxes',
+          estimatedCostRange: `$${Math.round(floorArea * 3.5 * mult)} – $${Math.round(floorArea * 8.5 * mult)}`,
+          details: `${Math.round(floorArea)} sq ft with 10% waste buffer (~$${(3.5 * mult).toFixed(1)}–$${(8.5 * mult).toFixed(1)}/sq ft)`,
+        },
+        {
+          category: 'Painting',
+          material: 'Interior Wall & Ceiling Paint (2 Coats)',
+          quantity: paintGallons,
+          unit: 'gallons',
+          estimatedCostRange: `$${Math.round(paintGallons * 45 * mult)} – $${Math.round(paintGallons * 75 * mult)}`,
+          details: `~${totalWallArea} sq ft surface coverage (primer + 2 finish coats)`,
+        },
+        {
+          category: 'Walls & Ceilings',
+          material: '1/2" Drywall Patching & POP Plaster',
+          quantity: drywallSheets,
+          unit: '4x8 sheets',
+          estimatedCostRange: `$${Math.round(drywallSheets * 18 * mult)} – $${Math.round(drywallSheets * 32 * mult)}`,
+          details: 'Wall patching, seam tape, compound, and texture repairs',
+        },
+        {
+          category: 'Trim & Molding',
+          material: 'Baseboard & Door Casing Trim',
+          quantity: baseboardFt,
+          unit: 'linear ft',
+          estimatedCostRange: `$${Math.round(baseboardFt * 2.2 * mult)} – $${Math.round(baseboardFt * 5.5 * mult)}`,
+          details: 'Perimeter baseboards, door casing, and caulking',
+        },
+        {
+          category: 'Kitchen & Bath',
+          material: 'Kitchen & Bathroom Fixture Refresh Allowance',
+          quantity: 1,
+          unit: 'project lot',
+          estimatedCostRange: `$${Math.round(floorArea * 12 * mult)} – $${Math.round(floorArea * 30 * mult)}`,
+          details: 'Vanities, sinks, faucets, tile backsplash, hardware, and minor plumbing',
+        },
+        {
+          category: 'Electrical & Lighting',
+          material: 'LED Recessed Lights, Switches & Receptacles',
+          quantity: Math.ceil(floorArea / 120),
+          unit: 'zones',
+          estimatedCostRange: `$${Math.round(floorArea * 3.5 * mult)} – $${Math.round(floorArea * 9 * mult)}`,
+          details: 'LED wafer pot lights, modern rocker switches, and tamper-resistant outlets',
+        },
+        {
+          category: 'Trade Labor & Disposal',
+          material: 'Licensed General Contractor & Debris Dumpster',
+          quantity: 1,
+          unit: 'allowance',
+          estimatedCostRange: `$${Math.round(floorArea * 14 * mult)} – $${Math.round(floorArea * 35 * mult)}`,
+          details: 'Site protection, 20-yard roll-off dumpster, and trades installation labor',
+        },
+        {
+          category: 'Contingency Reserve',
+          material: '15% Unforeseen Repair Contingency',
+          quantity: 1,
+          unit: 'buffer',
+          estimatedCostRange: `$${Math.round(floorArea * sqFtRateMin * 0.15)} – $${Math.round(floorArea * sqFtRateMax * 0.15)}`,
+          details: 'Standard 15% safety reserve for hidden structural or plumbing conditions',
+        },
+      ];
+
+      const totalCostMin = Math.round(floorArea * sqFtRateMin);
+      const totalCostMax = Math.round(floorArea * sqFtRateMax);
+
+      return {
+        bom,
+        totalCostMin,
+        totalCostMax,
+        roomAreaSqFt: Math.round(floorArea * 10) / 10,
+        roomAreaSqM: Math.round((floorArea / 10.7639) * 10) / 10,
+      };
+    },
+  },
 };

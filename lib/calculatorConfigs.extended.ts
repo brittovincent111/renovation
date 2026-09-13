@@ -638,7 +638,7 @@ export const EXTENDED_CONFIGS: Record<string, CalculatorConfig> = {
     externalNote: {
       text: 'Re-roofing is the cheapest time to add solar, since the panels mount to a new deck and you only pay for roof access once. Use our',
       linkText: 'Solar Payback Calculator',
-      href: 'https://solarcalculator.online',
+      href: 'https://solarpaybackcalculator.online',
       tail: 'to check whether panels pay for themselves on your roof.',
     },
     howItIsCalculated: [
@@ -1201,6 +1201,176 @@ export const EXTENDED_CONFIGS: Record<string, CalculatorConfig> = {
           { label: 'Hardware Style', value: res.hardwareType },
           { label: 'Pull Centre-to-Centre', value: res.pullCenterToCenterInches, unit: 'in' },
           { label: 'Screws Needed', value: res.screwsNeeded, unit: 'screws' },
+        ],
+      };
+    },
+  },
+
+  'false-ceiling-calculator': {
+    slug: 'false-ceiling-calculator',
+    defaultInputs: { length: 15, width: 12, design: 'cove', boardSize: '4x6', waste: 10, price: 0 },
+    fields: [
+      { id: 'length', label: 'Room Length', type: 'number', defaultValue: 15, unitImperial: 'ft', unitMetric: 'm', step: 0.5, min: 1 },
+      { id: 'width', label: 'Room Width', type: 'number', defaultValue: 12, unitImperial: 'ft', unitMetric: 'm', step: 0.5, min: 1 },
+      {
+        id: 'design',
+        label: 'Ceiling Design Style',
+        type: 'select',
+        defaultValue: 'cove',
+        options: [
+          { label: 'Flush Flat Gypsum / Plasterboard', value: 'plain' },
+          { label: 'Perimeter Cove with LED Channel', value: 'cove' },
+          { label: 'Stepped Multi-Level / Island POP', value: 'stepped' },
+          { label: '2x2 Drop Grid Acoustic Tile', value: 'grid' },
+        ],
+        helperText: 'Cove and stepped multi-level designs add vertical drop fascia surfaces.',
+      },
+      {
+        id: 'boardSize',
+        label: 'Sheet / Board Dimension',
+        type: 'select',
+        defaultValue: '4x6',
+        options: [
+          { label: '4 × 6 ft (24 sq ft) — Standard POP / Gyproc', value: '4x6' },
+          { label: '4 × 8 ft (32 sq ft) — Large Drywall Panel', value: '4x8' },
+        ],
+      },
+      { id: 'waste', label: 'Waste Buffer %', type: 'number', defaultValue: 10, step: 1, min: 0, isAdvanced: true },
+      { id: 'price', label: 'Installed Cost per Sq Ft / m² (optional)', type: 'number', defaultValue: 0, step: 0.5, min: 0, isAdvanced: true },
+    ],
+    formulaHighlight: 'Sheets = ⌈(Ceiling Area × Fascia Factor × (1 + Waste%)) ÷ Sheet Area⌉',
+    howItIsCalculated: [
+      'Base ceiling area is computed from room length × width. Cove and stepped designs add 15% to 25% surface area for vertical drop fascias and LED light troughs.',
+      'Perimeter channel (wall angle) runs the room perimeter; intermediate channels are spaced at 4 ft (1.2m) centres, and ceiling section channels at 16" (400mm) centres.',
+      'Fasteners, fiber joint tape, and joint compound are calculated based on total perimeter and board seam lengths.',
+    ],
+    faqs: [
+      { question: 'What is the average false ceiling cost per square foot in 2026?', answer: 'In the US and UK, standard gypsum false ceilings cost between $4.50 to $10.00 per square foot installed. In India, POP and Gyproc false ceilings typically range between ₹90 to ₹150 per sq ft including materials, channel grid framing, tape, and labor.' },
+      { question: 'Which is better: Gypsum board or POP (Plaster of Paris)?', answer: 'Gypsum board false ceilings install much faster, produce less dust, and give clean factory-uniform seams. POP (Plaster of Paris) applied on chicken mesh is better for complex curved shapes, medallions, and custom cornices, but requires skilled masons and several days drying time.' },
+      { question: 'How much ceiling height is lost with a false ceiling?', answer: 'A plain flush false ceiling drops the ceiling by 4 to 5 inches (100–125mm). If incorporating a cove with concealed LED strip lighting, plan for a 6 to 8 inch drop (150–200mm) to allow room for the light trough and driver.' },
+      { question: 'How much perimeter channel is needed?', answer: 'The perimeter channel mounts to all four perimeter walls. Measure room perimeter (2 × (Length + Width)) and add 10% for overlapping corners and cuts.' },
+      { question: 'How many LED downlights should I plan for?', answer: 'A common rule of thumb is one 7W–9W recessed LED downlight for every 25 to 35 square feet of floor area for living rooms and bedrooms, augmented by warm 3000K LED strip lights inside the cove.' },
+    ],
+    calculate: (inputs, unit) => {
+      const isMetric = unit === 'metric';
+      const l = Number(inputs.length) || 15;
+      const w = Number(inputs.width) || 12;
+      const waste = Number(inputs.waste) || 10;
+      const design = inputs.design || 'cove';
+      const boardSize = inputs.boardSize || '4x6';
+      const customPrice = Number(inputs.price) || 0;
+
+      const baseArea = l * w;
+      const perimeter = 2 * (l + w);
+      const fasciaFactor = design === 'stepped' ? 1.25 : design === 'cove' ? 1.15 : 1.0;
+      const effectiveArea = baseArea * fasciaFactor;
+
+      const sheetSqFt = boardSize === '4x6' ? 24 : 32;
+      const sheetArea = isMetric ? sheetSqFt / 10.7639 : sheetSqFt;
+      const sheetsNeeded = Math.ceil((effectiveArea * (1 + waste / 100)) / sheetArea);
+
+      const perimeterLength = Math.ceil(perimeter * 1.1);
+      const intermediateChannelPieces = Math.ceil((l / (isMetric ? 1.2 : 4)) * 1.1);
+      const ceilingSectionPieces = Math.ceil((w / (isMetric ? 0.4 : 1.33)) * 1.1);
+      const screwsNeeded = sheetsNeeded * 32;
+      const coveLedLength = design === 'cove' || design === 'stepped' ? Math.round(perimeter) : 0;
+
+      const defaultRateMin = isMetric ? 45 : 4.5;
+      const defaultRateMax = isMetric ? 95 : 9.5;
+      const estCostMin = customPrice > 0 ? Math.round(baseArea * customPrice) : Math.round(baseArea * defaultRateMin);
+      const estCostMax = customPrice > 0 ? Math.round(baseArea * customPrice * 1.15) : Math.round(baseArea * defaultRateMax);
+
+      return {
+        primaryValue: sheetsNeeded,
+        primaryUnit: 'sheets',
+        primaryLabel: `${boardSize} Gypsum Boards Needed`,
+        details: [
+          { label: 'Ceiling Surface Area', value: Math.round(baseArea * 10) / 10, unit: isMetric ? 'm²' : 'sq ft', highlight: true },
+          { label: 'Perimeter Channel Required', value: perimeterLength, unit: isMetric ? 'm' : 'linear ft' },
+          { label: 'Intermediate Main Channels', value: intermediateChannelPieces, unit: 'lengths' },
+          { label: 'Ceiling Section Furring Channels', value: ceilingSectionPieces, unit: 'lengths' },
+          { label: 'Drywall Screws (25mm)', value: screwsNeeded, unit: 'screws' },
+          ...(coveLedLength > 0 ? [{ label: 'Cove LED Profile Length', value: coveLedLength, unit: isMetric ? 'm' : 'linear ft' }] : []),
+          { label: 'Estimated Installed Cost', value: `$${estCostMin.toLocaleString()} – $${estCostMax.toLocaleString()}` },
+        ],
+      };
+    },
+  },
+
+  'home-renovation-loan-calculator': {
+    slug: 'home-renovation-loan-calculator',
+    defaultInputs: { loanAmount: 35000, interestRate: 7.5, termYears: 5, loanType: 'personal' },
+    fields: [
+      { id: 'loanAmount', label: 'Renovation Budget / Loan Amount', type: 'number', defaultValue: 35000, step: 1000, min: 1000, max: 500000 },
+      { id: 'interestRate', label: 'Interest Rate (APR %)', type: 'number', defaultValue: 7.5, step: 0.1, min: 1, max: 25 },
+      {
+        id: 'termYears',
+        label: 'Loan Term Length',
+        type: 'select',
+        defaultValue: 5,
+        options: [
+          { label: '3 Years (36 Months)', value: '3' },
+          { label: '5 Years (60 Months) — Most Common', value: '5' },
+          { label: '7 Years (84 Months)', value: '7' },
+          { label: '10 Years (120 Months)', value: '10' },
+          { label: '15 Years (180 Months) — Fixed Home Equity', value: '15' },
+          { label: '20 Years (240 Months)', value: '20' },
+        ],
+      },
+      {
+        id: 'loanType',
+        label: 'Financing Vehicle',
+        type: 'select',
+        defaultValue: 'personal',
+        options: [
+          { label: 'Unsecured Personal Remodel Loan (No Equity Needed)', value: 'personal' },
+          { label: 'Home Equity Line of Credit (HELOC)', value: 'heloc' },
+          { label: 'Fixed-Rate Home Equity Loan', value: 'homeEquity' },
+          { label: 'Cash-Out Refinance Mortgage', value: 'cashOut' },
+        ],
+        helperText: 'Personal loans fund within 48h with no appraisal. Home equity options offer lower rates using home collateral.',
+      },
+    ],
+    formulaHighlight: 'Monthly Payment = P × [r(1 + r)ⁿ] ÷ [(1 + r)ⁿ − 1], where r = APR ÷ 12 and n = Months',
+    howItIsCalculated: [
+      'Calculates exact monthly amortization payments based on principal borrowed, APR interest rate, and term length.',
+      'Computes total interest charges paid across the full lifetime of the renovation financing loan.',
+      'Compares financing vehicles (unsecured personal loan vs. HELOC vs. fixed home equity loan) to clarify total project carrying costs.',
+    ],
+    faqs: [
+      { question: 'What credit score do I need for a home renovation loan?', answer: 'Unsecured personal renovation loans typically require a 620+ FICO score, with the most competitive interest rates reserved for 720+ scores. Home equity loans and HELOCs usually require at least a 680 score and 15% to 20% remaining home equity.' },
+      { question: 'Is a HELOC or Personal Loan better for home remodeling?', answer: 'A HELOC is ideal when remodeling in phases with unpredictable contractor draws because you only pay interest on funds as you draw them. A personal renovation loan is superior if you need quick funding (24–72 hours), do not want an appraisal fee, or do not wish to put your house up as collateral.' },
+      { question: 'Are home renovation loan interest payments tax deductible?', answer: 'Under current IRS guidelines in the United States, interest paid on home equity loans and HELOCs is tax-deductible if the borrowed funds are used to substantially buy, build, or improve the home securing the loan. Interest on unsecured personal loans is not tax-deductible.' },
+      { question: 'How much can I borrow for a home renovation?', answer: 'For home equity loans and HELOCs, most lenders cap your borrowing at 80% to 85% combined loan-to-value (CLTV) minus your remaining mortgage balance. Unsecured personal home improvement loans typically lend between $5,000 up to $100,000 depending on debt-to-income ratio.' },
+      { question: 'How can I lower my monthly renovation loan payments?', answer: 'Extending your loan term from 5 years to 10 or 15 years significantly reduces your monthly obligation, though it increases total cumulative interest. Alternatively, combining savings with a smaller loan reduces principal burden.' },
+    ],
+    calculate: (inputs) => {
+      const principal = Math.max(1000, Number(inputs.loanAmount) || 35000);
+      const apr = Math.max(0.1, Number(inputs.interestRate) || 7.5);
+      const years = Math.max(1, Number(inputs.termYears) || 5);
+      const months = years * 12;
+      const monthlyRate = (apr / 100) / 12;
+
+      const monthlyPayment = Math.round(
+        (principal * (monthlyRate * Math.pow(1 + monthlyRate, months))) /
+        (Math.pow(1 + monthlyRate, months) - 1)
+      );
+
+      const totalPayments = monthlyPayment * months;
+      const totalInterest = totalPayments - principal;
+      const interestRatio = Math.round((totalInterest / principal) * 100);
+
+      return {
+        primaryValue: monthlyPayment,
+        primaryUnit: '/ month',
+        primaryLabel: 'Estimated Monthly Payment',
+        details: [
+          { label: 'Borrowed Loan Amount', value: `$${principal.toLocaleString()}`, highlight: true },
+          { label: 'Total Interest Paid', value: `$${totalInterest.toLocaleString()}` },
+          { label: 'Total Financing Cost', value: `$${totalPayments.toLocaleString()}` },
+          { label: 'Loan Term Length', value: `${years} Years (${months} months)` },
+          { label: 'Interest-to-Principal Ratio', value: `${interestRatio}%` },
+          { label: 'Effective APR', value: `${apr.toFixed(2)}%` },
         ],
       };
     },

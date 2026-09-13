@@ -54,6 +54,21 @@ export const GUIDES = [
       { name: 'Gravel Calculator', slug: 'gravel-calculator' },
     ],
   },
+  {
+    slug: 'flat-renovation-cost-guide',
+    title: 'Flat Renovation Cost: 1BHK, 2BHK & 3BHK Cost Per Sq Ft Guide',
+    category: 'Apartment & Turnkey',
+    readTime: '12 min read',
+    date: 'September 2026',
+    description:
+      'Detailed 1BHK, 2BHK, and 3BHK renovation costs per square foot in India. Modular kitchen pricing, bathroom waterproofing, false ceiling rates, and painting budgets.',
+    linkedCalculators: [
+      { name: 'House Renovation Cost', slug: 'projects/house-renovation-cost' },
+      { name: 'False Ceiling', slug: 'calculators/false-ceiling-calculator/india' },
+      { name: 'Renovation Loan', slug: 'calculators/home-renovation-loan-calculator' },
+      { name: 'Painting (India)', slug: 'calculators/paint-calculator/india' },
+    ],
+  },
 ];
 
 export default function GuidesDirectoryPage() {
@@ -74,7 +89,7 @@ export default function GuidesDirectoryPage() {
       </div>
 
       {/* Grid of Guides */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
         {GUIDES.map((guide) => (
           <div
             key={guide.slug}

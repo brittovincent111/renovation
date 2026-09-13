@@ -13,6 +13,7 @@ export type AdPosition =
   | 'top'
   | 'post-result'
   | 'content'
+  | 'post-explanation'
   | 'sidebar'
   | 'bottom'
   | 'below-result' // Backwards compatibility alias for post-result
@@ -58,6 +59,8 @@ export function AdSlot({ position, className = '', slotKey }: AdSlotProps) {
       case 'content':
       case 'in-related':
         return process.env.NEXT_PUBLIC_AD_SLOT_RELATED;
+      case 'post-explanation':
+        return process.env.NEXT_PUBLIC_AD_SLOT_POST_EXPLANATION || process.env.NEXT_PUBLIC_AD_SLOT_RELATED;
       case 'guide-inline':
         return process.env.NEXT_PUBLIC_AD_SLOT_GUIDE || process.env.NEXT_PUBLIC_AD_SLOT_RELATED;
       case 'sidebar':
@@ -81,6 +84,7 @@ export function AdSlot({ position, className = '', slotKey }: AdSlotProps) {
       case 'below-result':
         return 'min-h-[250px] md:min-h-[280px]';
       case 'content':
+      case 'post-explanation':
       case 'in-related':
       case 'guide-inline':
       case 'bottom':
