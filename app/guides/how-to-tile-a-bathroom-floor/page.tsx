@@ -5,6 +5,7 @@ import { AdSlot } from '@/components/AdSlot';
 import { ChevronRight, Calculator, CheckCircle2, AlertTriangle, BookOpen, Clock } from 'lucide-react';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://renovationcalculator.online/guides/how-to-tile-a-bathroom-floor' },
   title: 'How to Tile a Bathroom Floor (Step-by-Step DIY Guide) | RenovationCalculator',
   description:
     'Complete step-by-step guide to tiling a bathroom floor. Subfloor preparation, cement backer board, waterproofing membrane, thinset mortar selection, tile laying, and stain-resistant grouting.',
@@ -119,6 +120,9 @@ export default function TileBathroomFloorGuide() {
               <li>Check your perimeter cuts. If your layout leaves slivers of tile narrower than 2 inches against the wall or vanity, shift your center line by half a tile to balance both sides.</li>
             </ol>
           </section>
+
+          {/* Natural Content Break: Dry layout completed -> Transitioning to wet mortar application */}
+          <AdSlot position="guide-inline" slotKey="guide-tile-inline-2" />
 
           <section>
             <h2 className="text-xl sm:text-2xl font-bold text-[#263238] mb-3">

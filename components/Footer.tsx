@@ -24,7 +24,7 @@ export function Footer() {
           </div>
 
           {/* Calculator Categories */}
-          <div className="md:col-span-2 grid grid-cols-2 gap-6">
+          <div className="md:col-span-2 grid grid-cols-2 lg:grid-cols-3 gap-6">
             <div>
               <h4 className="text-xs font-bold uppercase tracking-wider text-[#263238] mb-3">
                 Flooring & Walls
@@ -52,6 +52,26 @@ export function Footer() {
               <ul className="space-y-2 text-xs">
                 {ALL_CALCULATORS.filter((c) =>
                   ['Concrete & Masonry', 'Landscaping', 'Structures'].includes(c.category)
+                ).map((calc) => (
+                  <li key={calc.slug}>
+                    <Link
+                      href={`/calculators/${calc.slug}`}
+                      className="text-charcoal-600 hover:text-terracotta transition-colors"
+                    >
+                      {calc.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#263238] mb-3">
+                Systems &amp; Trades
+              </h4>
+              <ul className="space-y-2 text-xs">
+                {ALL_CALCULATORS.filter((c) =>
+                  ['Mechanical & Roof', 'Electrical & Trades'].includes(c.category)
                 ).map((calc) => (
                   <li key={calc.slug}>
                     <Link

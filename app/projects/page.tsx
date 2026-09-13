@@ -3,8 +3,10 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { PROJECT_COMBOS } from '@/lib/projectsData';
 import { FolderKanban, ArrowRight, CheckCircle2, Sparkles, Printer, Layers } from 'lucide-react';
+import { getCalculatorBySlug } from '@/lib/calculatorList';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://renovationcalculator.online/projects' },
   title: 'Project Combo Calculators — Full Renovation Material Estimators',
   description:
     'Plan full remodels with zero repetitive entry. Enter dimensions once to size all tiles, paint, drywall, flooring, and fasteners across bathroom, kitchen, deck, basement, and patio projects.',
@@ -59,14 +61,19 @@ export default function ProjectsDirectoryPage() {
                   Included Sub-Calculations:
                 </p>
                 <div className="flex flex-wrap gap-1.5">
-                  {proj.subCalculators.map((sub) => (
-                    <span
-                      key={sub}
-                      className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-warm-100 text-[#263238]"
-                    >
-                      {sub}
-                    </span>
-                  ))}
+                  {proj.linkedCalculators.map((calcSlug) => {
+                    const calc = getCalculatorBySlug(calcSlug);
+                    if (!calc) return null;
+                    return (
+                      <Link
+                        key={calcSlug}
+                        href={`/calculators/${calcSlug}`}
+                        className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-warm-100 text-[#263238] hover:bg-terracotta hover:text-white transition-colors"
+                      >
+                        {calc.shortName}
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             </div>

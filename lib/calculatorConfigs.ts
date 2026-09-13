@@ -1,16 +1,8 @@
 import { UnitSystem, CalculationResult, FAQItem, CalculatorMeta } from './types';
+import { EXTENDED_CONFIGS } from './calculatorConfigs.extended';
 import { calculateTile } from './calculators/tile';
 import { calculatePaint } from './calculators/paint';
 import { calculateConcrete } from './calculators/concrete';
-import { calculateFlooring } from './calculators/flooring';
-import { calculateWallpaper } from './calculators/wallpaper';
-import { calculatePlywood } from './calculators/plywood';
-import { calculateDrywall } from './calculators/drywall';
-import { calculateRoofing } from './calculators/roofing';
-import { calculateInsulation } from './calculators/insulation';
-import { calculateMulchSoil } from './calculators/mulchSoil';
-import { calculateFence } from './calculators/fence';
-import { calculateDeck } from './calculators/deck';
 import { calculateGrout } from './calculators/grout';
 import { calculateSubfloor } from './calculators/subfloor';
 import { calculateCarpet } from './calculators/carpet';
@@ -27,19 +19,6 @@ import { calculateSiding } from './calculators/siding';
 import { calculateEpoxyFloor } from './calculators/epoxyFloor';
 import { calculateBoardFeet } from './calculators/boardFeet';
 import { calculateWireGauge } from './calculators/wireGauge';
-import { calculatePlumbingPipe } from './calculators/plumbingPipe';
-import { calculateSod } from './calculators/sod';
-import { calculateTileMortar } from './calculators/tileMortar';
-import { calculateCabinetHardware } from './calculators/cabinetHardware';
-import { calculateDeckRailing } from './calculators/deckRailing';
-import { calculateDrywallMud } from './calculators/drywallMud';
-import { calculateFrenchDrain } from './calculators/frenchDrain';
-import { calculateDrivewaySealer } from './calculators/drivewaySealer';
-import { calculateAtticVentilation } from './calculators/atticVentilation';
-import { calculateRebar } from './calculators/rebar';
-import { calculateBrick } from './calculators/brick';
-import { calculateDeckFooting } from './calculators/deckFooting';
-import { calculateShedRoof } from './calculators/shedRoof';
 import { calculateConcreteSlab } from './calculators/concreteSlab';
 
 export interface FieldDefinition {
@@ -64,6 +43,12 @@ export interface CalculatorConfig {
   formulaHighlight: string;
   howItIsCalculated: string[];
   faqs: FAQItem[];
+  /**
+   * Optional single contextual link to a sibling site, rendered under the
+   * explanation. Set on individual calculators only where genuinely relevant —
+   * not a site-wide placement.
+   */
+  externalNote?: { text: string; linkText: string; href: string; tail?: string };
   calculate: (inputs: Record<string, any>, unit: UnitSystem) => CalculationResult;
 }
 
@@ -99,6 +84,8 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
       { question: 'How much extra tile should I buy for cuts and waste?', answer: 'For standard grid layouts, order 10% extra. For diagonal, herringbone, or rooms with multiple alcoves, order 15% to 20% extra to account for angled perimeter cuts and future repairs.' },
       { question: 'What does nominal tile size mean?', answer: 'A nominal 12"x12" tile often measures approximately 11-7/8" to allow for standard grout joints. For precise layouts, check manufacturer caliber specifications.' },
       { question: 'How many tiles are typically in a box?', answer: 'Standard boxes usually contain between 8 to 15 tiles depending on tile dimensions and thickness. Always check the package labeling before placing your order.' },
+      { question: 'Should I dry-lay tiles before fixing?', answer: 'Yes, at least the first two rows and the centre line. Dry-laying shows you where the cuts fall, and lets you shift the layout so you are not left with a sliver at the most visible wall. Ten minutes here saves a floor you will look at for years.' },
+      { question: 'How do I plan cuts around a doorway?', answer: "Start the layout from the doorway or the room's focal point so full tiles land where the eye goes, and push the cut tiles to the wall that will be least visible or behind furniture. Never centre a grout joint on a doorway." },
     ],
     calculate: (inputs, unit) => {
       const res = calculateTile({
@@ -142,6 +129,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'When should I use sanded vs unsanded grout?', answer: 'Use unsanded grout for joints narrower than 1/8" (3mm) or on polished marble/glass that scratches easily. Use sanded grout for joints 1/8" and wider to prevent shrinkage cracking.' },
       { question: 'How many square feet does a 25 lb bag of grout cover?', answer: 'For 12"x12" tile with 1/8" joints, a 25 lb bag covers approximately 100-130 sq ft. For 3"x6" subway tiles, coverage drops to approximately 45-60 sq ft.' },
+      { question: 'How long before I can walk on grouted tile?', answer: 'Light foot traffic after 24 hours, heavy use and water exposure after 72. Epoxy grout cures faster but is far less forgiving to clean up — work in small sections and wipe before it sets.' },
+      { question: 'Why is my grout drying patchy or blotchy?', answer: 'Usually inconsistent water in the mix between batches, or wiping too early and pulling cement out of the joint. Mix every batch by the same measure, and wait until the grout is firm before the first pass.' },
+      { question: 'Do I need to seal grout?', answer: 'Seal cementitious grout in wet areas and on floors — it is porous and stains readily. Epoxy grout needs no sealer. Reseal cement grout roughly annually in a shower.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculateGrout({
@@ -205,6 +195,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'What is the standard subfloor thickness?', answer: '3/4-inch tongue-and-groove OSB (or Sturd-I-Floor plywood) is the IRC building code standard over joists spaced 16 or 24 inches on-center.' },
       { question: 'Do I need construction adhesive for subfloor?', answer: 'Yes. Gluing subfloor panels to joists with polyurethane subfloor adhesive prevents squeaks caused by seasonal wood expansion.' },
+      { question: 'Should subfloor panels be glued as well as screwed?', answer: 'Yes. Construction adhesive on the joists plus screws is what eliminates squeaks — screws alone allow the panel to lift fractionally off the joist as the wood moves. Nails are worse still.' },
+      { question: 'Which way should subfloor sheets run?', answer: 'Perpendicular to the joists, with end joints staggered so they do not line up row to row and every end joint landing on a joist. Leave a 1/8" gap at panel edges for expansion.' },
+      { question: 'Can I install subfloor over an existing one?', answer: 'Yes, a second layer is common for stiffening a bouncy floor or building up height. Offset the new joints from the old, and check that the added thickness will not cause problems at doors and stair risers.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculateSubfloor({
@@ -256,6 +249,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'Why is carpet measured in square yards instead of square feet?', answer: 'In the United States and UK, broadloom carpet has historically been manufactured and priced per square yard (9 square feet).' },
       { question: 'How much extra carpet is needed for seams and corners?', answer: 'For standard rectangular rooms, 10% is adequate. For rooms wider than 12 feet or rooms with angled walls, order 15% extra to align nap directions.' },
+      { question: 'Why is carpet sold in 12 foot widths?', answer: 'Broadloom carpet is manufactured on 12 ft looms, so any room wider than 12 ft needs a seam. Room layout relative to that 12 ft width drives waste more than area does — a 13 ft wide room is markedly less efficient than a 12 ft one.' },
+      { question: 'Where should carpet seams be placed?', answer: 'Running with the main light source and out of high-traffic paths. Never seam across a doorway. A seam perpendicular to a window will be visible every sunny afternoon.' },
+      { question: 'Do I need new underlay?', answer: 'Almost always. Underlay compresses permanently over its life, and old padding under new carpet will wear the new carpet out early. It is a small fraction of the total cost and it determines how the floor feels.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculateCarpet({
@@ -300,6 +296,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'How much paint does 1 gallon cover?', answer: 'One gallon of quality interior paint covers approximately 350 to 400 square feet with one coat on a smooth, primed wall.' },
       { question: 'Do I really need two coats of paint?', answer: 'Yes. The first coat seals and provides color depth, while the second coat creates a uniform protective film that resists scuffs and cleaning.' },
+      { question: 'Do I need primer or can I use self-priming paint?', answer: 'Prime bare drywall, bare wood, any patch or repair, and any dramatic colour change. Self-priming paint is really just thicker paint — it does not solve adhesion over glossy or stained surfaces the way a dedicated primer does.' },
+      { question: 'How much paint do doors and trim take?', answer: 'About a quart per door for two coats, and roughly a gallon per 200 linear feet of trim. Trim paint is usually a different sheen from the walls, so it is bought separately rather than out of the wall total.' },
+      { question: 'Does paint sheen change how much I need?', answer: 'Marginally — flat paint is more porous and can need slightly more on the first coat. The bigger factor is the surface: new drywall absorbs far more than a previously painted wall, which is exactly what the primer coat is for.' },
     ],
     calculate: (inputs, unit) => {
       const l = Number(inputs.length) || 14;
@@ -356,6 +355,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'Why does primer have lower coverage than paint?', answer: 'PVA and oil primers have higher resin-to-pigment binders that soak into porous drywall paper and spackle rather than sitting on top of the film.' },
       { question: 'Do I need primer if my paint is "Paint & Primer in One"?', answer: 'On bare, unpainted drywall or repaired patches, a dedicated PVA primer is strongly recommended to avoid flashing (dull patches) in finish paint.' },
+      { question: 'When do I need a stain-blocking primer?', answer: 'Over water stains, smoke damage, crayon, marker, or tannin-rich woods such as cedar and redwood. Use shellac or oil-based — a water-based primer will let those stains bleed straight back through the topcoat, often within days.' },
+      { question: 'Can I tint primer to match my topcoat?', answer: 'Yes, and you should for strong or deep colours. Tinting primer towards the finish colour routinely saves a whole topcoat, which more than pays for the tinting.' },
+      { question: 'Do I need to prime over existing paint?', answer: 'Not if it is sound, matt and a similar colour. Do prime over gloss or semi-gloss, over any repair, and wherever you are going substantially lighter — otherwise the sheen or the patch will telegraph through.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculatePrimer({
@@ -399,6 +401,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'Should I buy 8ft, 12ft, or 16ft baseboard pieces?', answer: '16ft boards minimize unsightly scarf joints on long walls. 8ft boards are easier to transport in passenger vehicles but require more wall splices.' },
       { question: 'How much extra molding should I buy for corner miters?', answer: 'Plan for 10% to 15% extra material. Outside 45° corners and inside coped joints always produce cut-off waste.' },
+      { question: 'How do I handle inside and outside corners?', answer: 'Cope inside corners rather than mitring them — a coped joint stays tight as the house moves and seasonal humidity changes, where a mitre opens visibly. Mitre outside corners, and glue the joint.' },
+      { question: 'How much extra baseboard should I buy?', answer: 'Add 10-15%. Every corner consumes length in the cut, boards are rarely perfectly straight, and coping takes a practice piece or two. Buying long lengths reduces the number of joints along a wall.' },
+      { question: 'Should baseboard be installed before or after flooring?', answer: 'After, in almost all cases. The baseboard then covers the flooring expansion gap. With carpet, the baseboard goes on first and is held slightly off the subfloor so the carpet can tuck beneath it.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculateBaseboard({
@@ -452,6 +457,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'Why are wall studs spaced at 16 inches on center?', answer: '16 inches OC divides evenly into standard 48" (4-foot) and 96" (8-foot) plywood and drywall panels, ensuring sheet edges land centered on framing members.' },
       { question: 'How many top plates are required for a framed wall?', answer: 'Building codes require a double top plate for load-bearing and exterior walls to overlap joints at corners and tie intersecting walls together.' },
+      { question: 'Should studs be 16 or 24 inches on centre?', answer: '16" is standard for load-bearing walls and gives better drywall support. 24" is permitted for many non-bearing interior walls and uses noticeably less lumber, but 1/2" drywall can show waviness between studs at that spacing.' },
+      { question: 'What is the fencepost rule in framing?', answer: 'A 10 ft wall at 16" on centre needs 9 studs, not 8 — you need a stud at both ends plus the ones between. Forgetting the final stud is the single most common framing take-off error.' },
+      { question: 'Do I need a double top plate?', answer: 'Yes on load-bearing walls, with the plate joints offset from the joints below by at least one stud bay. It ties the wall together and lets joists or trusses bear anywhere along the top rather than only over a stud.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculateWallFraming({
@@ -496,6 +504,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'How thick should a concrete patio or driveway be?', answer: 'Patios and sidewalks are standard 4 inches thick. Driveways supporting passenger vehicles should be 5 to 6 inches thick with rebar reinforcement.' },
       { question: 'How many bags of concrete make 1 cubic yard?', answer: 'It takes 45 bags of 80 lb concrete or 60 bags of 60 lb concrete to yield one cubic yard.' },
+      { question: 'How long does concrete take to cure?', answer: 'It is walkable in 24-48 hours, takes light vehicle traffic at 7 days, and reaches design strength at 28 days. Curing is a chemical reaction, not drying — keep it damp for the first week, especially in heat or wind.' },
+      { question: 'Should I order extra concrete?', answer: 'Add 5-10%. Sub-base is never perfectly level, and running short mid-pour creates a cold joint that is a permanent weakness. Excess is far cheaper than a second delivery.' },
+      { question: 'What causes concrete to crack?', answer: 'Shrinkage as it cures, which is why control joints exist — they decide where it cracks. Cut joints at roughly 24-36 times the slab thickness in feet, within 6-12 hours of the pour. Excess water in the mix makes shrinkage cracking substantially worse.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculateConcrete({
@@ -550,6 +561,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'When is it cheaper to order ready-mix vs bag mix?', answer: 'For anything over 1.5 to 2 cubic yards (approx 70-90 bags of 80lb concrete), ordering ready-mix delivery is cheaper and dramatically faster.' },
       { question: 'Why is a gravel sub-base necessary under concrete?', answer: 'Compacted gravel provides uniform support, prevents frost-heave cracking, and allows subsurface water to drain away from under the slab.' },
+      { question: 'How thick should a concrete slab be?', answer: '4" for patios, walkways and shed bases. 5-6" for driveways and anything carrying a vehicle. 6" or more with rebar for RVs, heavy trucks or workshop equipment. Thickness matters less than a well-compacted base beneath it.' },
+      { question: 'Do I need a vapour barrier under the slab?', answer: 'Under any slab inside a building, yes — 6-10 mil polyethylene over the base. Without it, ground moisture wicks up through the concrete and will damage flooring adhesive, wood and finishes above.' },
+      { question: 'How much base material do I need?', answer: '4-6" of compacted gravel for a patio, 6-8" for a driveway. Compact in 2-3" lifts with a plate compactor. Most slab failures trace back to inadequate base preparation rather than to the concrete itself.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculateConcreteSlab({
@@ -616,6 +630,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'What depth should paver base gravel be?', answer: 'Pedestrian walkways and patios require 4 inches of compacted crushed gravel base. Driveways require 8 to 10 inches of compacted gravel.' },
       { question: 'Can I lay pavers directly on sand without gravel?', answer: 'No. Without a compacted crushed gravel base, ground freeze-thaw and rainfall will cause pavers to shift and settle unevenly.' },
+      { question: 'How deep should the paver base be?', answer: '4-6 inches of compacted crushed stone for a patio or walkway, 8-12 inches for a driveway, plus 1 inch of bedding sand. Compact the base in 2-3 inch lifts — a single deep lift never compacts properly through its full depth.' },
+      { question: 'What slope do pavers need for drainage?', answer: 'A minimum 1% fall away from the house, about 1/8 inch per foot. Without it water pools on the surface and works into the joints, which eventually undermines the bedding layer.' },
+      { question: 'Do I need polymeric sand in the joints?', answer: 'It is worth it. Polymeric sand hardens when wetted, locks the pavers against shifting and strongly suppresses weeds and ants. Sweep it in fully, then mist rather than soak — flooding it washes the binder out.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculatePaver({
@@ -670,6 +687,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'Why does the bottom course of a retaining wall need to be buried?', answer: 'Burying the first course (typically 1 inch for every 8 inches of wall height, minimum 4-6 inches) locks the base into the soil and prevents the wall from kicking outward.' },
       { question: 'Do I need geogrid soil reinforcement?', answer: 'Segmental gravity retaining walls taller than 4 feet typically require geogrid tiebacks layered into the backfill soil to prevent structural tipping.' },
+      { question: 'When does a retaining wall need engineering?', answer: 'Generally above 4 feet, though many jurisdictions set the threshold lower, and any wall supporting a slope, a driveway or a structure needs design regardless of height. A failed retaining wall is both dangerous and expensive to rebuild.' },
+      { question: 'Do I need drainage behind the wall?', answer: 'Always. Gravel backfill and a perforated drain pipe at the base relieve hydrostatic pressure, which is the single most common cause of retaining wall failure. Soil saturated after heavy rain exerts far more force than dry soil.' },
+      { question: 'What is a geogrid and do I need one?', answer: "Geogrid is a synthetic mesh laid in horizontal layers into the backfill, tying the wall back into the soil mass behind it. Segmental walls above roughly 3-4 feet generally need it; the manufacturer's tables specify the spacing." },
     ],
     calculate: (inputs, unit) => {
       const res = calculateRetainingWall({
@@ -722,6 +742,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'How deep should driveway gravel be?', answer: 'For a new driveway, install 4 to 6 inches of crushed base rock (#2 or #3 stone) topped with 2 to 3 inches of angular surface gravel (e.g. #57 or crusher run).' },
       { question: 'How many tons of gravel fit in a dump truck?', answer: 'A standard tri-axle dump truck delivers between 12 to 16 tons (approx 9 to 11 cubic yards) of crushed stone.' },
+      { question: 'What size gravel should I use for a driveway?', answer: 'A base layer of 2-3 inch crushed stone, topped with 3/4 inch crushed stone with fines — the fines are what lock the surface together. Avoid rounded pea gravel for driveways; it never binds and migrates under tyres.' },
+      { question: 'How many tons in a cubic yard of gravel?', answer: 'Roughly 1.4 tons for most crushed stone, varying with stone type and moisture. Suppliers quote by the ton or by the yard depending on region, so confirm which unit a price refers to before ordering.' },
+      { question: 'Do I need landscape fabric under gravel?', answer: 'Yes for decorative areas and paths — it stops gravel sinking into the soil and greatly reduces weeds. For driveways, use a heavier woven geotextile rated for vehicle loads rather than standard landscape fabric.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculateGravel({
@@ -772,6 +795,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'Why does wire gauge matter over long distances?', answer: 'As distance increases, electrical resistance drops voltage. Excessive voltage drop can cause motors to overheat, LED lights to flicker, and appliances to wear out prematurely.' },
       { question: 'What is the NEC rule for voltage drop?', answer: 'NEC Informational Note 210.19(A) recommends that branch circuit voltage drop should not exceed 3% under continuous load for safe, efficient operation.' },
+      { question: 'What happens if I use wire that is too small?', answer: 'The conductor overheats under load, insulation degrades, and the circuit becomes a fire risk. Breakers protect the wire, not the appliance, so an undersized conductor on an oversized breaker is specifically dangerous — never do it.' },
+      { question: 'Does wire length really affect the gauge I need?', answer: 'Yes. Voltage drop grows with distance, and above roughly 100 feet you frequently need to go up one gauge to keep the drop under the 3% recommended for branch circuits. Long runs to a detached garage or shed are where this bites.' },
+      { question: 'Should I hire an electrician?', answer: 'For any new circuit, panel work, or anything requiring a permit, yes — and in many jurisdictions it is legally required. This calculator is a planning aid; it is not a substitute for a licensed electrician or a code inspection.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculateWireGauge({
@@ -834,6 +860,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'What size mini-split do I need for a 500 sq ft room?', answer: 'A 500 square foot room with standard ceilings typically requires a 12,000 BTU (1 Ton) mini-split heat pump.' },
       { question: 'What happens if an AC unit is oversized?', answer: 'An oversized AC cools the room too quickly without running long enough to remove indoor humidity, leaving the air feeling damp, cold, and clammy.' },
+      { question: 'Is bigger always better for air conditioning?', answer: 'No, and oversizing is actively harmful. An oversized unit cools the air quickly then shuts off before it has removed humidity, leaving the room cold and clammy, and the short cycling wears the compressor out early.' },
+      { question: 'Does ceiling height change the BTU requirement?', answer: 'Yes. Standard calculations assume 8 foot ceilings; add roughly 10-15% for 9 foot and 20-25% for 10 foot, since you are conditioning volume rather than floor area.' },
+      { question: 'What else affects the load besides room size?', answer: 'Sun exposure, window area and glazing type, insulation levels, number of occupants, and heat-producing appliances. A south-facing room with large windows can need 20-30% more capacity than the same room facing north.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculateHvacBtu({
@@ -876,6 +905,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'What is the maximum stair riser height allowed by code?', answer: 'Under the International Residential Code (IRC R311.7.5.1), the maximum riser height is 7-3/4 inches (196 mm), and the maximum variation between the highest and lowest riser is 3/8 inch.' },
       { question: 'How many stringers are needed for a 36" wide staircase?', answer: 'Residential stairs require stringers spaced no more than 16 inches on-center. A standard 36-inch wide staircase requires at least 3 stringers (left, center, right).' },
+      { question: 'What is the code for stair rise and run?', answer: 'The IRC allows a maximum 7 3/4 inch rise and requires a minimum 10 inch tread run, with no more than 3/8 inch variation between the largest and smallest riser in a flight. That consistency rule is what inspectors measure most closely.' },
+      { question: 'Why does the bottom riser end up shorter?', answer: "Because the stringer sits on the finished floor while the tread thickness is added on top — the bottom riser must be cut down by one tread thickness to keep all risers equal. Missing this 'dropping the stringer' step is the classic stair-building error." },
+      { question: 'How many stringers do I need?', answer: 'Three for a standard 36 inch wide staircase with 2x12 stringers — one at each side and one centred. Go to four for widths over 42 inches, or where treads are thinner than 1 inch.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculateStairStringer({
@@ -919,6 +951,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'Should I choose 5-inch or 6-inch gutters?', answer: '5-inch gutters are standard for moderate rainfall and low-slope roofs. 6-inch gutters hold 40% more water volume, making them ideal for metal roofs, steep pitches, or heavy rain areas.' },
       { question: 'How much slope does a rain gutter require?', answer: 'Gutters should slope at least 1/4 inch per 10 feet toward the nearest downspout to ensure positive drainage without standing water.' },
+      { question: 'What size gutter do I need?', answer: '5 inch K-style handles most residential roofs. Move to 6 inch for large roof areas, steep pitches that shed water fast, or regions with intense downpours. Undersized gutters overflow at exactly the moment they are most needed.' },
+      { question: 'How many downspouts do I need?', answer: 'One per 30-40 feet of gutter run as a rule, and at minimum one per gutter section. A long run with a single downspout backs up at the far end during heavy rain regardless of gutter size.' },
+      { question: 'What slope should gutters have?', answer: 'About 1/4 inch of fall per 10 feet toward the downspout — enough to drain, not so much that it is visibly out of line with the fascia. Long runs are often pitched from a high point in the middle toward downspouts at each end.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculateGutter({
@@ -962,6 +997,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'What is a "square" in exterior siding?', answer: 'A square is the construction trade unit of measurement representing exactly 100 square feet of finished wall surface.' },
       { question: 'How much waste should I add for siding?', answer: 'Add 10% for simple rectangular homes. Add 12% to 15% for multi-story homes with gables, dormers, and complex cut angles.' },
+      { question: 'How much extra siding should I order?', answer: '10% for a simple rectangular elevation, 15% where there are gables, dormers or many windows. Every angled cut at a gable produces an offcut that usually cannot be used elsewhere.' },
+      { question: 'Do I need house wrap behind siding?', answer: 'Yes. House wrap is a weather-resistive barrier and a drainage plane — siding is not waterproof, and water that gets behind it needs a path back out. Lap it shingle-style from the bottom up and tape the seams.' },
+      { question: 'How do I handle expansion with vinyl siding?', answer: 'Nail in the centre of the slots, leave the panel able to slide, and never drive the nail tight — vinyl expands and contracts substantially with temperature. Face-nailed vinyl buckles in summer heat, and it is the most common vinyl siding failure.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculateSiding({
@@ -1005,6 +1043,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'What does "4/4" and "8/4" lumber mean?', answer: 'Hardwood lumber is sold in quarter-inch thickness increments: 4/4 is 1" thick, 5/4 is 1.25" thick, 6/4 is 1.5" thick, and 8/4 is 2" thick.' },
       { question: 'How much waste should I calculate for rough hardwood?', answer: 'Always buy 15% to 20% extra rough lumber to allow for jointing bowed boards, planing cup, and trimming end checks/cracks.' },
+      { question: 'What is a board foot?', answer: '144 cubic inches of lumber — 1 inch thick by 12 inches wide by 12 inches long. Hardwood is sold by the board foot rather than by the linear foot, because widths vary board to board.' },
+      { question: 'Is the thickness nominal or actual?', answer: 'Board feet use nominal thickness in quarters — 4/4 is one inch nominal, 8/4 is two inches. Surfaced lumber measures less than nominal, but you are charged on the nominal figure, which surprises people buying hardwood for the first time.' },
+      { question: 'How much extra hardwood should I buy?', answer: '20-30% over the finished requirement. Rough hardwood contains defects you will cut around, and boards need jointing and planing to final dimension. This is much higher than the allowance for dimensional softwood.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculateBoardFeet({
@@ -1058,6 +1099,9 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
     faqs: [
       { question: 'Why is concrete acid etching necessary before epoxy?', answer: 'Acid etching opens the pores of smooth concrete (creating a profile like 120-grit sandpaper), allowing the epoxy to chemically bond without peeling.' },
       { question: 'How long must a new concrete slab cure before epoxy?', answer: 'New concrete must cure for at least 28 to 30 days and pass a moisture test before applying epoxy to prevent moisture vapor blistering.' },
+      { question: 'How long does epoxy take to cure?', answer: 'Foot traffic after 24 hours, vehicles after 72 hours to 7 days depending on product and temperature. Driving on epoxy too early causes tyre marks that cannot be removed.' },
+      { question: 'Do I need to etch or grind the concrete first?', answer: 'Yes — this is what determines whether the floor lasts. Diamond grinding is far more reliable than acid etching. Epoxy over unprepared, sealed or contaminated concrete will peel off in sheets, often within a year.' },
+      { question: 'Will epoxy work over a damp slab?', answer: 'No. Test with a plastic sheet taped down for 24 hours; condensation underneath means the slab is passing moisture, and epoxy will delaminate. A moisture-tolerant primer or vapour barrier system is required in that case.' },
     ],
     calculate: (inputs, unit) => {
       const res = calculateEpoxyFloor({
@@ -1082,10 +1126,18 @@ export const CALCULATOR_CONFIGS: Record<string, CalculatorConfig> = {
   },
 };
 
-// Generic fallback calculator for any remaining slugs that automatically binds to standard calculations
+/**
+ * Every one of the 42 calculators now resolves to a bespoke config: the 20
+ * defined above, plus the 22 in EXTENDED_CONFIGS. The generic builder below is
+ * retained only as a crash guard for an unknown slug and is no longer reachable
+ * from any real route — if it ever fires, a calculator is missing a config.
+ */
 export function getCalculatorConfig(slug: string): CalculatorConfig {
   if (CALCULATOR_CONFIGS[slug]) {
     return CALCULATOR_CONFIGS[slug];
+  }
+  if (EXTENDED_CONFIGS[slug]) {
+    return EXTENDED_CONFIGS[slug];
   }
 
   // Smart dynamic builder for any long-tail calculator

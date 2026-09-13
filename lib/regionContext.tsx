@@ -3,6 +3,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { UnitSystem } from './types';
 
+import { detectUserRegion } from './region-detection';
+
 export type RegionCode = 'US' | 'UK' | 'IN' | 'AU';
 
 export interface RegionInfo {
@@ -94,6 +96,9 @@ interface RegionContextType {
   setRegionCode: (code: RegionCode) => void;
   unit: UnitSystem;
   setUnit: (unit: UnitSystem) => void;
+  isAutoDetected: boolean;
+  showDetectedNotice: boolean;
+  dismissDetectedNotice: () => void;
 }
 
 const RegionContext = createContext<RegionContextType | undefined>(undefined);
@@ -101,17 +106,37 @@ const RegionContext = createContext<RegionContextType | undefined>(undefined);
 export function RegionProvider({ children }: { children: React.ReactNode }) {
   const [regionCode, setRegionCodeState] = useState<RegionCode>('US');
   const [unit, setUnitState] = useState<UnitSystem>('imperial');
+  const [isAutoDetected, setIsAutoDetected] = useState<boolean>(false);
+  const [showDetectedNotice, setShowDetectedNotice] = useState<boolean>(false);
 
   useEffect(() => {
     try {
       const savedRegion = localStorage.getItem('buildcalc_region') as RegionCode;
-      if (savedRegion && REGIONS[savedRegion]) {
-        setRegionCodeState(savedRegion);
-        setUnitState(REGIONS[savedRegion].defaultUnit);
-      }
       const savedUnit = localStorage.getItem('buildcalc_unit') as UnitSystem;
-      if (savedUnit && (savedUnit === 'imperial' || savedUnit === 'metric')) {
-        setUnitState(savedUnit);
+      const noticeDismissed = localStorage.getItem('buildcalc_region_notice_dismissed') === 'true';
+
+      if (savedRegion && REGIONS[savedRegion]) {
+        // User has already set a manual preference or previous visit
+        setRegionCodeState(savedRegion);
+        if (savedUnit && (savedUnit === 'imperial' || savedUnit === 'metric')) {
+          setUnitState(savedUnit);
+        } else {
+          setUnitState(REGIONS[savedRegion].defaultUnit);
+        }
+        setIsAutoDetected(false);
+        setShowDetectedNotice(false);
+        return;
+      }
+
+      // First visit: Auto-detect region from browser language & timezone
+      const detected = detectUserRegion();
+      setRegionCodeState(detected.region);
+      setUnitState(REGIONS[detected.region].defaultUnit);
+      setIsAutoDetected(true);
+
+      // Unobtrusive first-visit notice (dismissible, not a modal)
+      if (!noticeDismissed) {
+        setShowDetectedNotice(true);
       }
     } catch {
       // Ignore if localStorage unavailable
@@ -123,10 +148,19 @@ export function RegionProvider({ children }: { children: React.ReactNode }) {
     setRegionCodeState(code);
     const newUnit = REGIONS[code].defaultUnit;
     setUnitState(newUnit);
+    setIsAutoDetected(false);
+    setShowDetectedNotice(false); // Immediate dismissal on manual choice
     try {
       localStorage.setItem('buildcalc_region', code);
       localStorage.setItem('buildcalc_unit', newUnit);
-      document.cookie = `buildcalc_region=${code}; path=/; max-age=31536000`;
+      localStorage.setItem('buildcalc_region_notice_dismissed', 'true');
+    } catch {}
+  };
+
+  const dismissDetectedNotice = () => {
+    setShowDetectedNotice(false);
+    try {
+      localStorage.setItem('buildcalc_region_notice_dismissed', 'true');
     } catch {}
   };
 
@@ -144,6 +178,9 @@ export function RegionProvider({ children }: { children: React.ReactNode }) {
         setRegionCode,
         unit,
         setUnit,
+        isAutoDetected,
+        showDetectedNotice,
+        dismissDetectedNotice,
       }}
     >
       {children}
@@ -159,6 +196,9 @@ export function useRegion() {
       setRegionCode: () => {},
       unit: 'imperial' as UnitSystem,
       setUnit: () => {},
+      isAutoDetected: false,
+      showDetectedNotice: false,
+      dismissDetectedNotice: () => {},
     };
   }
   return context;

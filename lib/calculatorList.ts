@@ -542,9 +542,19 @@ export function getRelatedCalculators(currentSlug: string, count: number = 6): C
   const sameCategory = ALL_CALCULATORS.filter(
     (c) => c.slug !== currentSlug && c.category === current.category
   );
+  // Rotate the cross-category fill by the current calculator's position in the
+  // list. Slicing from index 0 every time sent almost all cross-category link
+  // equity to whichever calculators happen to sit at the top of ALL_CALCULATORS.
   const otherCategories = ALL_CALCULATORS.filter(
     (c) => c.slug !== currentSlug && c.category !== current.category
   );
+  const offset = Math.max(0, ALL_CALCULATORS.findIndex((c) => c.slug === currentSlug));
+  const rotated = otherCategories.length
+    ? [
+        ...otherCategories.slice(offset % otherCategories.length),
+        ...otherCategories.slice(0, offset % otherCategories.length),
+      ]
+    : [];
 
-  return [...sameCategory, ...otherCategories].slice(0, count);
+  return [...sameCategory, ...rotated].slice(0, count);
 }

@@ -2,8 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { BookOpen, ArrowRight, Clock, Calculator, ShieldCheck } from 'lucide-react';
+import { AdSlot } from '@/components/AdSlot';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://renovationcalculator.online/guides' },
   title: 'DIY Renovation Guides & Trade Insights | RenovationCalculator',
   description:
     'Comprehensive step-by-step DIY installation and home remodeling guides. Learn how to tile bathroom floors, estimate renovation budgets, and compare concrete vs pavers.',
@@ -127,6 +129,9 @@ export default function GuidesDirectoryPage() {
           </div>
         ))}
       </div>
+
+      {/* Terminal Directory Ad Slot (defaults to false in adConfig) */}
+      <AdSlot position="bottom" slotKey="guides-index-bottom" />
     </div>
   );
 }

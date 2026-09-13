@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import { AdSlotKey, isAdSlotEnabled } from '@/lib/adConfig';
 
 declare global {
   interface Window {
@@ -21,6 +22,7 @@ export type AdPosition =
 export interface AdSlotProps {
   position: AdPosition;
   className?: string;
+  slotKey?: AdSlotKey;
 }
 
 /**
@@ -32,10 +34,16 @@ export interface AdSlotProps {
  * - Clear, subtle, non-deceptive "Advertisement" labeling
  * - Hidden on print and PDF export via `print:hidden`
  * - Dynamically loads AdSense slots from environment variables
+ * - Honors adConfig feature flags; returns null if disabled
  */
-export function AdSlot({ position, className = '' }: AdSlotProps) {
+export function AdSlot({ position, className = '', slotKey }: AdSlotProps) {
   const adRef = useRef<HTMLModElement | null>(null);
   const pushedRef = useRef(false);
+
+  // Early return if slot is disabled in adConfig
+  if (slotKey && !isAdSlotEnabled(slotKey)) {
+    return null;
+  }
 
   const clientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 

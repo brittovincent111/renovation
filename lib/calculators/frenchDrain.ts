@@ -38,8 +38,13 @@ export function calculateFrenchDrain(input: FrenchDrainCalculatorInput): FrenchD
   const pipeRadiusFt = (pipeDia / 2) / 12;
   const pipeCuFt = Math.PI * Math.pow(pipeRadiusFt, 2) * lengthFt;
 
-  // Gravel volume: trench volume minus pipe volume plus 10% compaction
-  const netGravelCuFt = (trenchCuFt - pipeCuFt) * 1.1;
+  // Gravel fills the trench around the pipe, stopping roughly 4 in below grade
+  // where the filter fabric folds over and the soil cap goes on. The extra 10%
+  // is an ORDER allowance for compaction and settlement, applied after the
+  // in-place volume so the two figures stay physically consistent.
+  const soilCapCuFt = lengthFt * (widthIn / 12) * (4 / 12);
+  const inPlaceGravelCuFt = Math.max(0, trenchCuFt - pipeCuFt - soilCapCuFt);
+  const netGravelCuFt = inPlaceGravelCuFt * 1.1;
   const gravelCuYds = Math.round((netGravelCuFt / 27) * 10) / 10;
   // Washed stone density: ~1.35 tons per cu yd
   const gravelTons = Math.round(gravelCuYds * 1.35 * 10) / 10;

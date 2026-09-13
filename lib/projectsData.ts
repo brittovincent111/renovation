@@ -33,6 +33,8 @@ export interface ProjectComboConfig {
     height: number;
   };
   subCalculators: string[];
+  /** Slugs of the calculators this project draws on — rendered as real links. */
+  linkedCalculators: string[];
   faqs: FAQItem[];
   calculate: (dimensions: { length: number; width: number; height: number; quality: 'budget' | 'standard' | 'premium' }, unit: UnitSystem) => {
     bom: ProjectBOMItem[];
@@ -54,6 +56,7 @@ export const PROJECT_COMBOS: Record<string, ProjectComboConfig> = {
     metaDescription: 'Free bathroom remodel calculator. Enter room dimensions once to estimate floor & shower tiles, grout, moisture-resistant drywall, and paint in one bill of materials.',
     defaultDimensions: { length: 10, width: 8, height: 8.5 },
     subCalculators: ['Tile', 'Grout', 'Paint', 'Drywall'],
+    linkedCalculators: ['tile-calculator', 'grout-calculator', 'paint-calculator', 'drywall-calculator', 'tile-mortar-calculator', 'subfloor-calculator'],
     faqs: [
       { question: 'How much does a full bathroom renovation cost on average in 2026?', answer: 'A standard 8x10 ft bathroom remodel typically costs between $7,500 to $18,000 for materials and DIY installation, or $15,000 to $30,000+ with professional general contractor labor.' },
       { question: 'What type of drywall should be used in a bathroom?', answer: 'Use moisture-resistant greenboard or cement backer board (like HardieBacker or Durock) in all wet areas and behind tile, and mold-resistant drywall on all remaining walls and ceiling.' },
@@ -147,6 +150,7 @@ export const PROJECT_COMBOS: Record<string, ProjectComboConfig> = {
     metaDescription: 'Free kitchen remodel calculator. Input room dimensions to calculate hardwood/tile flooring, backsplash tile, wall paint, and cabinet hardware in one bill of materials.',
     defaultDimensions: { length: 16, width: 12, height: 9 },
     subCalculators: ['Flooring', 'Tile (Backsplash)', 'Paint', 'Cabinet Hardware'],
+    linkedCalculators: ['flooring-calculator', 'tile-calculator', 'paint-calculator', 'cabinet-hardware-calculator', 'baseboard-calculator'],
     faqs: [
       { question: 'How much does a typical kitchen renovation cost?', answer: 'Minor DIY kitchen updates average $8,000 to $15,000. Full kitchen renovations with new cabinets, quartz countertops, and appliances range from $25,000 to $65,000+.' },
       { question: 'How much backsplash tile do I need for a kitchen?', answer: 'The average residential kitchen has between 30 to 45 square feet of backsplash area between countertops and upper cabinets.' },
@@ -210,6 +214,7 @@ export const PROJECT_COMBOS: Record<string, ProjectComboConfig> = {
     metaDescription: 'Free deck cost calculator. Estimate deck boards, 4x4 posts, concrete pier footings, railing pickets, and structural hardware in a unified Bill of Materials.',
     defaultDimensions: { length: 20, width: 14, height: 3 },
     subCalculators: ['Decking', 'Railing', 'Footings', 'Fasteners'],
+    linkedCalculators: ['deck-calculator', 'deck-railing-calculator', 'deck-footing-calculator', 'stair-stringer-calculator', 'concrete-calculator'],
     faqs: [
       { question: 'What is the cost difference between pressure treated and composite decking?', answer: 'Pressure-treated pine decking materials cost approximately $15 to $25 per square foot, while composite decking (Trex, TimberTech) averages $35 to $60 per square foot with fasteners.' },
       { question: 'How many concrete footings does a 20x14 deck require?', answer: 'A 20x14 deck with beams spaced 10ft typically requires 6 to 8 footings depending on joist overhang and local frost depth requirements.' },
@@ -264,6 +269,7 @@ export const PROJECT_COMBOS: Record<string, ProjectComboConfig> = {
     metaDescription: 'Free basement finishing calculator. Enter room dimensions to estimate 2x4 wall framing studs, drywall sheets, insulation, subfloor, and paint in one BOM.',
     defaultDimensions: { length: 30, width: 20, height: 8 },
     subCalculators: ['Wall Framing', 'Drywall', 'Insulation', 'Flooring', 'Paint'],
+    linkedCalculators: ['wall-framing-calculator', 'drywall-calculator', 'drywall-mud-calculator', 'insulation-calculator', 'flooring-calculator', 'paint-calculator'],
     faqs: [
       { question: 'What is the average cost per square foot to finish a basement?', answer: 'DIY basement finishing typically costs between $12 to $25 per square foot in materials. Professional basement contractors charge $40 to $90+ per square foot.' },
       { question: 'Why is foam insulation critical in a basement?', answer: 'Continuous rigid foam or rockwool insulation against concrete foundation walls prevents warm indoor moisture from condensing on cold foundation masonry, preventing mold.' },
@@ -328,6 +334,7 @@ export const PROJECT_COMBOS: Record<string, ProjectComboConfig> = {
     metaDescription: 'Free paver patio calculator. Enter length and width to calculate pavers, crushed stone gravel tons, bedding sand, and edge restraint in a unified Bill of Materials.',
     defaultDimensions: { length: 18, width: 14, height: 0 },
     subCalculators: ['Pavers', 'Gravel Base', 'Bedding Sand', 'Edge Restraints'],
+    linkedCalculators: ['paver-calculator', 'gravel-calculator', 'concrete-slab-calculator', 'retaining-wall-calculator', 'sod-calculator'],
     faqs: [
       { question: 'How much does a 250 sq ft paver patio cost?', answer: 'A DIY paver patio averages $1,500 to $3,500 in materials (approx $6 to $14 per sq ft). Professional installation ranges from $4,500 to $9,000+ ($18 to $35/sq ft).' },
       { question: 'What goes under a paver patio?', answer: 'From bottom to top: compacted subsoil, geotextile fabric, 4 to 6 inches of compacted crushed stone base, 1 inch of uncompacted coarse bedding sand, pavers, and polymeric sand swept into the joints.' },

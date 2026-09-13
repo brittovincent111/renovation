@@ -2,6 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getCalculatorBySlug } from '@/lib/calculatorList';
+import { getRegionalContent } from '@/lib/regionalContent';
 import { CalculatorEngineView } from '@/components/CalculatorEngineView';
 
 interface PageProps {
@@ -93,5 +94,15 @@ export default async function RegionalCalculatorPage({ params }: PageProps) {
     description: `${calc.description} Optimized with metric default units for builders and DIYers in the ${reg.name}.`,
   };
 
-  return <CalculatorEngineView meta={regionalMeta} initialUnit="metric" />;
+  // Region-specific body copy and FAQs, so this page is not a duplicate of its parent.
+  const regionalContent = getRegionalContent(calc.slug, region);
+
+  return (
+    <CalculatorEngineView
+      meta={regionalMeta}
+      initialUnit="metric"
+      canonicalPath={`${calc.slug}/${region}`}
+      contentOverride={regionalContent}
+    />
+  );
 }

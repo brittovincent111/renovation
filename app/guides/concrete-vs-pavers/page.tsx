@@ -5,6 +5,7 @@ import { AdSlot } from '@/components/AdSlot';
 import { ChevronRight, Calculator, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://renovationcalculator.online/guides/concrete-vs-pavers' },
   title: 'Concrete vs Pavers: Which Is Cheaper for Patios & Driveways? | RenovationCalculator',
   description:
     'An objective comparison of poured concrete vs interlocking pavers. Cost per square foot, durability, crack resistance, maintenance, and DIY difficulty for patios and driveways.',

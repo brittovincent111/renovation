@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { getCalculatorBySlug } from '@/lib/calculatorList';
 import { ProjectComboConfig } from '@/lib/projectsData';
 import { useRegion } from '@/lib/regionContext';
 import { AdSlot } from './AdSlot';
@@ -205,12 +206,20 @@ export function ProjectComboView({ slug }: ProjectComboViewProps) {
                 Calculators Flowing Into This Project:
               </h3>
               <div className="space-y-2">
-                {project.subCalculators.map((sub, i) => (
-                  <div key={i} className="flex items-center justify-between text-xs py-2 px-3.5 rounded-xl bg-warm-50 border border-charcoal-100">
-                    <span className="font-semibold text-[#263238]">✓ {sub} Calculator</span>
-                    <span className="text-[10px] text-terracotta font-bold uppercase tracking-wider">Cascaded</span>
-                  </div>
-                ))}
+                {project.linkedCalculators.map((calcSlug) => {
+                  const calc = getCalculatorBySlug(calcSlug);
+                  if (!calc) return null;
+                  return (
+                    <Link
+                      key={calcSlug}
+                      href={`/calculators/${calcSlug}`}
+                      className="flex items-center justify-between text-xs py-2 px-3.5 rounded-xl bg-warm-50 border border-charcoal-100 hover:border-terracotta/60 hover:bg-terracotta-50/40 transition-colors"
+                    >
+                      <span className="font-semibold text-[#263238]">{calc.name}</span>
+                      <span className="text-[10px] text-terracotta font-bold uppercase tracking-wider">Open →</span>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://renovationcalculator.online/privacy-policy' },
   title: 'Privacy Policy & Cookie Disclosure | RenovationCalculator',
   description:
     'RenovationCalculator privacy policy explaining our client-side processing, cookie usage, advertising partners, and data handling standards.',
@@ -31,6 +32,9 @@ export default function PrivacyPolicyPage() {
           <h2 className="text-xl font-bold text-[#263238] mb-2">2. Local Storage and Preferences</h2>
           <p>
             To remember your preferred unit system (Imperial vs Metric) and geographical region (US, UK, India, Australia), RenovationCalculator saves simple key-value pairs in your browser&apos;s local storage (`localStorage`). This data never leaves your personal device and can be cleared at any time via your browser settings.
+          </p>
+          <p className="mt-2">
+            Region defaults on your initial visit are inferred client-side from standard browser signals (language locale and timezone); no IP-geolocation lookups are performed and no location data is collected, transmitted, or stored on our servers.
           </p>
         </section>
 

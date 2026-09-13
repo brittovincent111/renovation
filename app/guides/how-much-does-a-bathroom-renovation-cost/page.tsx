@@ -5,6 +5,7 @@ import { AdSlot } from '@/components/AdSlot';
 import { ChevronRight, Calculator, DollarSign, Clock, CheckCircle2 } from 'lucide-react';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://renovationcalculator.online/guides/how-much-does-a-bathroom-renovation-cost' },
   title: 'How Much Does a Bathroom Renovation Cost in 2026? (Real Cost Breakdown) | RenovationCalculator',
   description:
     'Comprehensive 2026 cost breakdown for bathroom renovations. Compare budget DIY ($4,000–$8,000), mid-range ($12,000–$22,000), and luxury custom ($30,000+) material and labor expenses.',

@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import { Calculator, ShieldCheck, Zap, Users, Cpu, Award } from 'lucide-react';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://renovationcalculator.online/about' },
   title: 'About RenovationCalculator — Transparent Construction & Renovation Estimating',
   description:
     'Learn about RenovationCalculator, our mission to provide 100% free, client-side, zero-tracking construction material calculators for homeowners and trade professionals.',

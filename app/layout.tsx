@@ -18,6 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  // Homepage canonical. Every other route sets its own, which overrides this.
+  alternates: { canonical: 'https://renovationcalculator.online' },
   metadataBase: new URL('https://renovationcalculator.online'),
   title: {
     default: 'RenovationCalculator — Free Home Renovation & Material Calculators',

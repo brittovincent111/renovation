@@ -29,17 +29,18 @@ export function calculateDrywallMud(input: DrywallMudCalculatorInput): DrywallMu
   const areaSqM = areaSqFt / 10.7639;
 
   // Joint compound consumption rule of thumb:
-  // Level 3 (taped + 1 coat): ~0.035 gallons per sq ft (~1 bucket per 130 sq ft)
-  // Level 4 (standard 3 coats: embed, fill, finish): ~0.053 gallons per sq ft (~1 bucket per 85 sq ft)
-  // Level 5 (standard 3 coats + full surface skim coat): ~0.09 gallons per sq ft (~1 bucket per 50 sq ft)
-  let galPerSqFt = 0.053;
+  // Ready-mix joint compound coverage, per ASTM C840 finish level.
+  // Level 3 (tape + 1 coat):            ~1 x 4.5 gal bucket per 550 sq ft
+  // Level 4 (tape + fill + finish):     ~1 x 4.5 gal bucket per 400 sq ft
+  // Level 5 (Level 4 + full skim coat): ~1 x 4.5 gal bucket per 250 sq ft
+  let galPerSqFt = 0.0113;
   let desc = 'Level 4 Standard: 3 coats over seams & screws, ready for flat or eggshell paint';
 
   if (level === 'level-3') {
-    galPerSqFt = 0.035;
+    galPerSqFt = 0.0082;
     desc = 'Level 3 Heavy Texture: 2 coats, suitable for heavy spray textures or heavy wall coverings';
   } else if (level === 'level-5') {
-    galPerSqFt = 0.09;
+    galPerSqFt = 0.018;
     desc = 'Level 5 Premium: 3 coats over fasteners plus full skim coat for gloss paint or critical lighting';
   }
 

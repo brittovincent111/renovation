@@ -9,10 +9,13 @@ import { AdSlot } from './AdSlot';
 import { RelatedCalculators } from './RelatedCalculators';
 import { JsonLd } from './JsonLd';
 import { useRegion, REGIONS, RegionCode } from '@/lib/regionContext';
+import { RegionDetectionNotice } from './RegionDetectionNotice';
 import { ChevronRight, HelpCircle, BookOpen, ChevronDown, CheckCircle2 } from 'lucide-react';
 
 export interface CalculatorLayoutProps {
   slug: string;
+  /** Path after /calculators/ — e.g. "tile-calculator/uk". Defaults to slug. */
+  canonicalPath?: string;
   name: string;
   category: string;
   description: string;
@@ -22,6 +25,7 @@ export interface CalculatorLayoutProps {
   howItIsCalculated: string[];
   formulaHighlight?: string;
   faqs: FAQItem[];
+  externalNote?: { text: string; linkText: string; href: string; tail?: string };
   children: React.ReactNode; // The input form
 }
 
@@ -35,6 +39,7 @@ export interface CalculatorLayoutProps {
  */
 export function CalculatorLayout({
   slug,
+  canonicalPath,
   name,
   category,
   description,
@@ -44,6 +49,7 @@ export function CalculatorLayout({
   howItIsCalculated,
   formulaHighlight,
   faqs,
+  externalNote,
   children,
 }: CalculatorLayoutProps) {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
@@ -53,7 +59,9 @@ export function CalculatorLayout({
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
 
-  const currentUrl = `https://renovationcalculator.online/calculators/${slug}`;
+  // Must include the region segment, or regional variants declare the parent's
+  // URL in their SoftwareApplication schema and contradict their own canonical.
+  const currentUrl = `https://renovationcalculator.online/calculators/${canonicalPath ?? slug}`;
 
   return (
     <div className="min-h-screen bg-white text-[#263238]">
@@ -108,6 +116,9 @@ export function CalculatorLayout({
             </div>
 
             <UnitToggle unit={unit} onChange={onUnitChange} />
+
+            {/* Unobtrusive first-visit auto-detection notice */}
+            <RegionDetectionNotice />
           </div>
         </div>
 
@@ -172,6 +183,19 @@ export function CalculatorLayout({
                 <span className="text-terracotta font-bold">Standard Formula: </span>
                 {formulaHighlight}
               </div>
+            )}
+
+            {externalNote && (
+              <p className="text-sm text-charcoal-600">
+                {externalNote.text}{' '}
+                <a
+                  href={externalNote.href}
+                  className="font-semibold text-terracotta underline underline-offset-2 hover:text-terracotta-700"
+                >
+                  {externalNote.linkText}
+                </a>
+                {externalNote.tail ? ` ${externalNote.tail}` : ''}
+              </p>
             )}
           </div>
         </section>

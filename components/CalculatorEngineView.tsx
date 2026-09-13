@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { CalculatorMeta, UnitSystem } from '@/lib/types';
+import { CalculatorMeta, UnitSystem, FAQItem } from '@/lib/types';
 import { CalculatorLayout } from '@/components/CalculatorLayout';
 import { getCalculatorConfig, FieldDefinition } from '@/lib/calculatorConfigs';
 import { useRegion } from '@/lib/regionContext';
@@ -10,9 +10,14 @@ import { SlidersHorizontal, ChevronDown, Calculator, Check } from 'lucide-react'
 interface CalculatorEngineViewProps {
   meta: CalculatorMeta;
   initialUnit?: UnitSystem;
+  canonicalPath?: string;
+  contentOverride?: { formulaHighlight?: string; howItIsCalculated: string[]; faqs: FAQItem[] };
 }
 
-export function CalculatorEngineView({ meta, initialUnit }: CalculatorEngineViewProps) {
+export function CalculatorEngineView({ meta, initialUnit,
+  canonicalPath,
+  contentOverride,
+}: CalculatorEngineViewProps) {
   const { unit: contextUnit, setUnit: setContextUnit } = useRegion();
   const unit = initialUnit || contextUnit;
 
@@ -178,15 +183,17 @@ export function CalculatorEngineView({ meta, initialUnit }: CalculatorEngineView
   return (
     <CalculatorLayout
       slug={meta.slug}
+      canonicalPath={canonicalPath}
       name={meta.name}
       category={meta.category}
       description={meta.description}
       unit={unit}
       onUnitChange={handleUnitChange}
       result={calculationResult}
-      howItIsCalculated={config.howItIsCalculated}
-      formulaHighlight={config.formulaHighlight}
-      faqs={config.faqs}
+      howItIsCalculated={contentOverride?.howItIsCalculated ?? config.howItIsCalculated}
+      formulaHighlight={contentOverride?.formulaHighlight ?? config.formulaHighlight}
+      faqs={contentOverride?.faqs ?? config.faqs}
+      externalNote={config.externalNote}
     >
       <form onSubmit={handleCalculate} className="space-y-6">
         {/* Primary / Basic Parameters */}

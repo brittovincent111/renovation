@@ -226,6 +226,18 @@ export default function HomePage() {
           </div>
         </div>
 
+        {/* Cross-site mention — sibling tool, not an ad unit. Homepage only. */}
+        <p className="-mt-6 mb-10 text-xs sm:text-sm text-charcoal-500">
+          Planning bigger energy upgrades?{' '}
+          <a
+            href="https://solarcalculator.online"
+            className="font-semibold text-terracotta underline underline-offset-2 hover:text-terracotta-700"
+          >
+            Check our Solar Payback Calculator
+          </a>{' '}
+          to model panel payback and incentives.
+        </p>
+
         {/* Grid of Calculators */}
         {filteredCalculators.length === 0 ? (
           <div className="py-16 text-center rounded-3xl border border-dashed border-charcoal-200 bg-warm-50/50">
@@ -364,6 +376,11 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Pre-footer Terminal Ad Slot (defaults to false in adConfig) */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-8">
+        <AdSlot position="bottom" slotKey="homepage-bottom" />
+      </div>
     </div>
   );
 }
