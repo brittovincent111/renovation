@@ -45,14 +45,14 @@ export const adConfig: Record<AdSlotKey, AdSlotMeta> = {
     description: 'Post-calculation break before formula explanation',
   },
   'calculator-post-explanation': {
-    enabled: true,
+    enabled: false,
     location: 'Calculators: Between the formula explanation and related tools',
-    description: 'Mid-page break at a content boundary, well below the result',
+    description: 'Mid-page break at a content boundary (disabled to maintain compliance with ad density limits)',
   },
   'calculator-content': {
-    enabled: true,
+    enabled: false,
     location: 'Calculators: Below RelatedCalculators',
-    description: 'Break between related calculators and FAQ',
+    description: 'Break between related calculators and FAQ (disabled to prioritize editorial content)',
   },
   'calculator-bottom': {
     enabled: true,

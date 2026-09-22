@@ -71,6 +71,11 @@ export function CalculatorLayout({
         description={description}
         url={currentUrl}
         faqs={faqs}
+        crumbs={[
+          { name: 'Home', path: '/' },
+          { name: category },
+          { name },
+        ]}
       />
 
       <div className="mx-auto max-w-7xl px-3.5 sm:px-6 lg:px-8 py-4 sm:py-8 md:py-10">
@@ -124,7 +129,7 @@ export function CalculatorLayout({
 
         {/* 3. TOP AD SLOT (§4) */}
         {/* Strictly separated from calculator form with reserved height to eliminate CLS */}
-        <AdSlot position="top" />
+        <AdSlot position="top" slotKey="calculator-top" />
 
         {/* 4. PRIMARY CALCULATOR & RESULT (§5) */}
         {/* Desktop: Inputs Left, Result Right. Mobile: Inputs -> Calculate -> Result */}
@@ -155,7 +160,7 @@ export function CalculatorLayout({
 
         {/* 5. POST-RESULT AD SLOT (§8) */}
         {/* Positioned cleanly after the completed calculation interaction */}
-        <AdSlot position="post-result" />
+        <AdSlot position="post-result" slotKey="calculator-post-result" />
 
         {/* 6. CALCULATION EXPLANATION (§9) */}
         <section className="mt-8 pt-8 border-t border-charcoal-100">
@@ -208,7 +213,7 @@ export function CalculatorLayout({
 
         {/* 8. CONTENT AD SLOT (§10 & §12) */}
         {/* Contextual placement between related tools and FAQ */}
-        <AdSlot position="content" />
+        <AdSlot position="content" slotKey="calculator-content" />
 
         {/* 9. FREQUENTLY ASKED QUESTIONS (§13) */}
         <section className="mt-8">
@@ -258,7 +263,7 @@ export function CalculatorLayout({
         </section>
 
         {/* 10. BOTTOM AD SLOT (§12) */}
-        <AdSlot position="bottom" />
+        <AdSlot position="bottom" slotKey="calculator-bottom" />
       </div>
     </div>
   );

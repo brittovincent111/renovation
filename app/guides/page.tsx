@@ -3,73 +3,15 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { BookOpen, ArrowRight, Clock, Calculator, ShieldCheck } from 'lucide-react';
 import { AdSlot } from '@/components/AdSlot';
+import { GUIDES } from '@/lib/guidesData';
 
 export const metadata: Metadata = {
   alternates: { canonical: 'https://renovationcalculator.online/guides' },
-  title: 'DIY Renovation Guides & Trade Insights | RenovationCalculator',
+  title: 'DIY Renovation Guides & Trade Insights',
   description:
     'Comprehensive step-by-step DIY installation and home remodeling guides. Learn how to tile bathroom floors, estimate renovation budgets, and compare concrete vs pavers.',
 };
 
-export const GUIDES = [
-  {
-    slug: 'how-to-tile-a-bathroom-floor',
-    title: 'How to Tile a Bathroom Floor (Step by Step)',
-    category: 'Flooring & Tiling',
-    readTime: '8 min read',
-    date: 'January 2026',
-    description:
-      'Master substrate prep, uncoupling membranes, thinset mortar trowel selection, tile layout grid centering, and stain-resistant grouting without lippage.',
-    linkedCalculators: [
-      { name: 'Tile Calculator', slug: 'tile-calculator' },
-      { name: 'Grout Calculator', slug: 'grout-calculator' },
-      { name: 'Tile Mortar Calculator', slug: 'tile-mortar-calculator' },
-    ],
-  },
-  {
-    slug: 'how-much-does-a-bathroom-renovation-cost',
-    title: 'How Much Does a Bathroom Renovation Cost in 2026?',
-    category: 'Cost Breakdown',
-    readTime: '10 min read',
-    date: 'January 2026',
-    description:
-      'Detailed financial breakdown of DIY vs contractor costs across budget ($5,000), mid-grade ($15,000), and luxury ($30,000+) bathroom remodels. Where to splurge vs save.',
-    linkedCalculators: [
-      { name: 'Bathroom Remodel Combo', slug: 'projects/bathroom-renovation-cost' },
-      { name: 'Paint Calculator', slug: 'paint-calculator' },
-      { name: 'Plumbing Pipe Sizing', slug: 'plumbing-pipe-calculator' },
-    ],
-  },
-  {
-    slug: 'concrete-vs-pavers',
-    title: 'Concrete vs Pavers: Which Is Cheaper for Patios & Driveways?',
-    category: 'Hardscape Comparison',
-    readTime: '7 min read',
-    date: 'January 2026',
-    description:
-      'An objective comparison of upfront material costs, installation labor, durability, frost-heave cracking risk, and long-term resale value for poured concrete vs interlocking pavers.',
-    linkedCalculators: [
-      { name: 'Concrete Slab Calculator', slug: 'concrete-slab-calculator' },
-      { name: 'Paver Calculator', slug: 'paver-calculator' },
-      { name: 'Gravel Calculator', slug: 'gravel-calculator' },
-    ],
-  },
-  {
-    slug: 'flat-renovation-cost-guide',
-    title: 'Flat Renovation Cost: 1BHK, 2BHK & 3BHK Cost Per Sq Ft Guide',
-    category: 'Apartment & Turnkey',
-    readTime: '12 min read',
-    date: 'September 2026',
-    description:
-      'Detailed 1BHK, 2BHK, and 3BHK renovation costs per square foot in India. Modular kitchen pricing, bathroom waterproofing, false ceiling rates, and painting budgets.',
-    linkedCalculators: [
-      { name: 'House Renovation Cost', slug: 'projects/house-renovation-cost' },
-      { name: 'False Ceiling', slug: 'calculators/false-ceiling-calculator/india' },
-      { name: 'Renovation Loan', slug: 'calculators/home-renovation-loan-calculator' },
-      { name: 'Painting (India)', slug: 'calculators/paint-calculator/india' },
-    ],
-  },
-];
 
 export default function GuidesDirectoryPage() {
   return (

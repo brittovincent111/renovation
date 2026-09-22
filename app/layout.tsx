@@ -5,6 +5,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { CookieBanner } from '@/components/CookieBanner';
 import { GoogleAdSense } from '@/components/GoogleAdSense';
+import { OrganizationJsonLd } from '@/components/JsonLd';
 import { RegionProvider } from '@/lib/regionContext';
 
 const geistSans = Geist({
@@ -88,6 +89,8 @@ export default function RootLayout({
     >
       <head>
         <GoogleAdSense />
+        {/* Sitewide publisher identity: who stands behind the figures on every page. */}
+        <OrganizationJsonLd />
       </head>
       <body className="min-h-full flex flex-col bg-white text-[#263238] selection:bg-terracotta selection:text-white">
         <RegionProvider>

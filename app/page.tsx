@@ -299,7 +299,7 @@ export default function HomePage() {
 
       {/* Non-intrusive Content Ad Unit (§26: One or two carefully placed ads) */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-8">
-        <AdSlot position="content" />
+        <AdSlot position="content" slotKey="homepage-content" />
       </div>
 
       {/* Featured Guides Section */}
@@ -370,13 +370,49 @@ export default function HomePage() {
                 Comparison
               </span>
               <h3 className="mt-3 text-base font-bold text-[#263238]">
-                Concrete vs Pavers: Which Is Cheaper for Patios & Driveways?
+                Concrete vs Pavers: Which Is Cheaper for Patios &amp; Driveways?
               </h3>
               <p className="mt-2 text-xs text-charcoal-500 line-clamp-3 leading-relaxed">
                 An honest comparison of initial material costs, longevity, cracking risk, subbase labor, and maintenance for outdoor concrete slabs vs interlocking pavers.
               </p>
               <span className="mt-4 inline-block text-xs font-semibold text-terracotta">
                 Read guide (7 min read) →
+              </span>
+            </Link>
+
+            <Link
+              href="/guides/kitchen-remodel-cost-guide"
+              className="p-6 rounded-3xl border border-charcoal-200 bg-white hover:border-terracotta/60 hover:shadow-lg transition-all"
+            >
+              <span className="text-[10px] font-bold uppercase tracking-wider text-terracotta bg-terracotta-50 px-2 py-0.5 rounded border border-terracotta-200/50">
+                Cost Breakdown
+              </span>
+              <h3 className="mt-3 text-base font-bold text-[#263238]">
+                How Much Does a Kitchen Remodel Cost in 2026?
+              </h3>
+              <p className="mt-2 text-xs text-charcoal-500 line-clamp-3 leading-relaxed">
+                Detailed 2026 breakdown of cabinetry, quartz countertops, plumbing, electrical circuits, and labor across minor, mid-range, and custom remodels.
+              </p>
+              <span className="mt-4 inline-block text-xs font-semibold text-terracotta">
+                Read guide (11 min read) →
+              </span>
+            </Link>
+
+            <Link
+              href="/guides/drywall-installation-and-finishing-guide"
+              className="p-6 rounded-3xl border border-charcoal-200 bg-white hover:border-terracotta/60 hover:shadow-lg transition-all"
+            >
+              <span className="text-[10px] font-bold uppercase tracking-wider text-terracotta bg-terracotta-50 px-2 py-0.5 rounded border border-terracotta-200/50">
+                Carpentry Guide
+              </span>
+              <h3 className="mt-3 text-base font-bold text-[#263238]">
+                Drywall Installation &amp; Level 5 Finishing
+              </h3>
+              <p className="mt-2 text-xs text-charcoal-500 line-clamp-3 leading-relaxed">
+                Complete walkthrough of 1/2&quot; vs 5/8&quot; board selection, horizontal hanging strategies, ASTM screw spacing, and GA-214 Level 5 finish standards.
+              </p>
+              <span className="mt-4 inline-block text-xs font-semibold text-terracotta">
+                Read guide (9 min read) →
               </span>
             </Link>
           </div>

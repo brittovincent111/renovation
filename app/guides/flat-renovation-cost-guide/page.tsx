@@ -2,7 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { AdSlot } from '@/components/AdSlot';
-import { ChevronRight, Calculator, Clock, CheckCircle2, IndianRupee, Layers, Home, Sparkles, HelpCircle } from 'lucide-react';
+import { GuideByline } from '@/components/GuideByline';
+import { ArticleJsonLd, BreadcrumbJsonLd, FaqJsonLd } from '@/components/JsonLd';
+import { getGuide } from '@/lib/guidesData';
+import { SITE_URL } from '@/lib/siteIdentity';
+import { ChevronRight, Calculator, CheckCircle2, IndianRupee, Layers, Home, Sparkles, HelpCircle } from 'lucide-react';
 
 export const metadata: Metadata = {
   alternates: { canonical: 'https://renovationcalculator.online/guides/flat-renovation-cost-guide' },
@@ -20,6 +24,18 @@ export const metadata: Metadata = {
     'house painting cost calculator',
     'home renovation loan calculator',
   ],
+  openGraph: {
+    title: 'Flat Renovation Cost: 1BHK, 2BHK & 3BHK Cost Per Sq Ft Guide (2026)',
+    description: 'Complete guide to flat renovation costs in 2026. Detailed 1BHK, 2BHK, and 3BHK renovation costs per square foot in India, modular kitchen prices, bathroom renovation costs, and false ceiling rates.',
+    url: 'https://renovationcalculator.online/guides/flat-renovation-cost-guide',
+    type: 'article',
+    siteName: 'RenovationCalculator',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Flat Renovation Cost: 1BHK, 2BHK & 3BHK Cost Per Sq Ft Guide (2026)',
+    description: 'Complete guide to flat renovation costs in 2026. Detailed 1BHK, 2BHK, and 3BHK renovation costs per square foot in India, modular kitchen prices, bathroom renovation costs, and false ceiling rates.',
+  },
 };
 
 const FAQ_DATA = [
@@ -51,49 +67,29 @@ const FAQ_DATA = [
 ];
 
 export default function FlatRenovationCostGuidePage() {
-  const articleSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: 'Flat Renovation Cost: 1BHK, 2BHK & 3BHK Cost Per Square Foot Guide (2026)',
-    description:
-      'Complete guide to flat renovation costs in India. Detailed 1BHK, 2BHK, and 3BHK cost per square foot breakdowns for modular kitchen, bathroom remodeling, false ceiling, and painting.',
-    author: {
-      '@type': 'Organization',
-      name: 'RenovationCalculator',
-      url: 'https://renovationcalculator.online',
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'RenovationCalculator',
-      url: 'https://renovationcalculator.online',
-    },
-    datePublished: '2026-01-15',
-    dateModified: '2026-09-13',
-    mainEntityOfPage: 'https://renovationcalculator.online/guides/flat-renovation-cost-guide',
-  };
-
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: FAQ_DATA.map((faq) => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-      },
-    })),
-  };
+  // Was two hand-written schema literals with dates that had to be kept in sync
+  // by hand; now driven by the same registry entry as the byline and sitemap.
+  const guide = getGuide('flat-renovation-cost-guide')!;
+  const url = `${SITE_URL}/guides/flat-renovation-cost-guide`;
 
   return (
     <article className="min-h-screen bg-white text-[#263238] pb-20">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <ArticleJsonLd
+        headline={guide.title}
+        description={guide.description}
+        url={url}
+        datePublished={guide.datePublished}
+        dateModified={guide.dateModified}
+        authorId={guide.authorId}
+        section={guide.category}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      <FaqJsonLd faqs={FAQ_DATA} />
+      <BreadcrumbJsonLd
+        crumbs={[
+          { name: 'Home', path: '/' },
+          { name: 'Guides', path: '/guides' },
+          { name: guide.title },
+        ]}
       />
 
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10 md:py-16">
@@ -115,13 +111,7 @@ export default function FlatRenovationCostGuidePage() {
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#263238] leading-tight">
             Flat Renovation Cost: 1BHK, 2BHK & 3BHK Cost Per Sq Ft Guide
           </h1>
-          <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-charcoal-500 font-medium">
-            <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> 12 min read</span>
-            <span>•</span>
-            <span>Includes 2BHK Bill of Materials & City Pricing Rules</span>
-            <span>•</span>
-            <span>Updated September 2026</span>
-          </div>
+          <GuideByline guide={guide} />
         </header>
 
         {/* Quick Tools Box */}
@@ -258,7 +248,8 @@ export default function FlatRenovationCostGuidePage() {
             </div>
           </section>
 
-          <AdSlot position="guide-inline" />
+          {/* Ad Slot Inline */}
+          <AdSlot position="guide-inline" slotKey="guide-cost-inline-1" />
 
           {/* Section 2 */}
           <section>

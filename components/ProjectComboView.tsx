@@ -19,9 +19,13 @@ import {
   FolderKanban,
   AlertCircle,
   FileSpreadsheet,
+  Wallet,
+  ListOrdered,
+  ShieldAlert,
 } from 'lucide-react';
 
 import { PROJECT_COMBOS } from '@/lib/projectsData';
+import { getProjectEditorial } from '@/lib/projectEditorial';
 
 interface ProjectComboViewProps {
   slug: string;
@@ -30,6 +34,15 @@ interface ProjectComboViewProps {
 export function ProjectComboView({ slug }: ProjectComboViewProps) {
   const project = PROJECT_COMBOS[slug] || PROJECT_COMBOS['bathroom-renovation-cost'];
   const { region, unit, setUnit } = useRegion();
+
+  // Prose that the bill of materials cannot convey: sequencing, what drives the
+  // budget, and the mistakes that force rework. Optional, so a project without
+  // an entry still renders.
+  const editorial = getProjectEditorial(slug);
+  const faqs = useMemo(
+    () => [...project.faqs, ...(editorial?.extraFaqs ?? [])],
+    [project.faqs, editorial],
+  );
 
   const [length, setLength] = useState<number>(project.defaultDimensions.length);
   const [width, setWidth] = useState<number>(project.defaultDimensions.width);
@@ -74,7 +87,12 @@ export function ProjectComboView({ slug }: ProjectComboViewProps) {
         name={project.title}
         description={project.description}
         url={currentUrl}
-        faqs={project.faqs}
+        faqs={faqs}
+        crumbs={[
+          { name: 'Home', path: '/' },
+          { name: 'Projects', path: '/projects' },
+          { name: project.shortTitle },
+        ]}
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
@@ -106,7 +124,7 @@ export function ProjectComboView({ slug }: ProjectComboViewProps) {
         </div>
 
         {/* Top Ad Slot */}
-        <AdSlot position="top" />
+        <AdSlot position="top" slotKey="project-top" />
 
         {/* Two-Column Layout */}
         <div className="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -323,7 +341,97 @@ export function ProjectComboView({ slug }: ProjectComboViewProps) {
         </div>
 
         {/* Post-Result Ad Slot */}
-        <AdSlot position="post-result" />
+        <AdSlot position="post-result" slotKey="project-post-result" />
+
+        {/* Project guidance: overview, cost drivers, sequence, pitfalls */}
+        {editorial && (
+          <div className="mt-12 pt-8 border-t border-charcoal-100 space-y-10">
+            <section>
+              <h2 className="text-2xl font-bold tracking-tight text-[#263238] mb-4">
+                Planning a {project.shortTitle.toLowerCase()}: what to know before you buy
+              </h2>
+              <div className="space-y-4 text-sm sm:text-base text-charcoal-700 leading-relaxed max-w-3xl">
+                {editorial.overview.map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
+              </div>
+            </section>
+
+            <section>
+              <div className="flex items-center gap-2.5 mb-5">
+                <span className="p-2 rounded-xl bg-terracotta-50 text-terracotta">
+                  <Wallet className="w-5 h-5" />
+                </span>
+                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#263238]">
+                  What actually drives the cost
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {editorial.costDrivers.map((d) => (
+                  <div
+                    key={d.factor}
+                    className="p-5 rounded-2xl border border-charcoal-200 bg-white"
+                  >
+                    <h3 className="text-sm font-bold text-[#263238] mb-1.5">{d.factor}</h3>
+                    <p className="text-xs sm:text-sm text-charcoal-600 leading-relaxed">
+                      {d.detail}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section>
+              <div className="flex items-center gap-2.5 mb-5">
+                <span className="p-2 rounded-xl bg-terracotta-50 text-terracotta">
+                  <ListOrdered className="w-5 h-5" />
+                </span>
+                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#263238]">
+                  Correct order of work
+                </h2>
+              </div>
+              <ol className="space-y-3">
+                {editorial.sequence.map((step) => (
+                  <li
+                    key={step.phase}
+                    className="flex gap-4 p-4 rounded-2xl border border-charcoal-100 bg-warm-50/60"
+                  >
+                    <span className="shrink-0 text-xs font-bold text-terracotta uppercase tracking-wider w-28 pt-0.5">
+                      {step.phase}
+                    </span>
+                    <span className="text-xs sm:text-sm text-charcoal-700 leading-relaxed">
+                      {step.detail}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <section>
+              <div className="flex items-center gap-2.5 mb-5">
+                <span className="p-2 rounded-xl bg-amber-100 text-amber-700">
+                  <ShieldAlert className="w-5 h-5" />
+                </span>
+                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#263238]">
+                  Mistakes that cost the most to undo
+                </h2>
+              </div>
+              <div className="space-y-3">
+                {editorial.pitfalls.map((p) => (
+                  <div
+                    key={p.mistake}
+                    className="p-5 rounded-2xl border border-amber-300/60 bg-amber-50/40"
+                  >
+                    <h3 className="text-sm font-bold text-[#263238] mb-1.5">{p.mistake}</h3>
+                    <p className="text-xs sm:text-sm text-charcoal-700 leading-relaxed">
+                      {p.detail}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+        )}
 
         {/* Project FAQ Section */}
         <section className="mt-12 pt-8 border-t border-charcoal-100">
@@ -337,7 +445,7 @@ export function ProjectComboView({ slug }: ProjectComboViewProps) {
           </div>
 
           <div className="space-y-3">
-            {project.faqs.map((faq, index) => {
+            {faqs.map((faq, index) => {
               const isOpen = openFaqIndex === index;
               return (
                 <div
@@ -364,7 +472,7 @@ export function ProjectComboView({ slug }: ProjectComboViewProps) {
         </section>
 
         {/* Bottom Ad Slot */}
-        <AdSlot position="bottom" />
+        <AdSlot position="bottom" slotKey="project-bottom" />
       </div>
     </div>
   );

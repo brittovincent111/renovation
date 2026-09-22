@@ -41,11 +41,7 @@ export function AdSlot({ position, className = '', slotKey }: AdSlotProps) {
   const adRef = useRef<HTMLModElement | null>(null);
   const pushedRef = useRef(false);
 
-  // Early return if slot is disabled in adConfig
-  if (slotKey && !isAdSlotEnabled(slotKey)) {
-    return null;
-  }
-
+  const isEnabled = !slotKey || isAdSlotEnabled(slotKey);
   const clientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 
   // Resolve slot ID per position
@@ -94,6 +90,7 @@ export function AdSlot({ position, className = '', slotKey }: AdSlotProps) {
   })();
 
   const isLive = Boolean(
+    isEnabled &&
     clientId &&
     slotId &&
     !clientId.includes('XXXXXXXXXXXXXXXX') &&
@@ -137,21 +134,6 @@ export function AdSlot({ position, className = '', slotKey }: AdSlotProps) {
     );
   }
 
-  // Pre-approval / local dev placeholder (prevents CLS with subtle, non-deceptive styling)
-  return (
-    <aside
-      data-ad-position={position}
-      aria-label="Advertisement slot"
-      className={`ad-slot-wrapper print:hidden w-full my-6 overflow-hidden rounded-2xl border border-dashed border-charcoal-200 bg-warm-50/50 p-4 flex flex-col items-center justify-center text-center transition-all ${heightClass} ${className}`}
-    >
-      <div className="flex flex-col items-center justify-center max-w-sm">
-        <span className="text-[10px] font-bold uppercase tracking-widest text-charcoal-400 bg-charcoal-100/70 px-2 py-0.5 rounded select-none">
-          Advertisement
-        </span>
-        <p className="mt-2 text-xs text-charcoal-400 font-medium">
-          Reserved sponsor placement • Active upon AdSense connection
-        </p>
-      </div>
-    </aside>
-  );
+  // Pre-approval / inactive slot fallback: return null to maintain clean UX and avoid AdSense empty unit penalties
+  return null;
 }

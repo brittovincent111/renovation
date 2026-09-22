@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   alternates: { canonical: 'https://renovationcalculator.online/privacy-policy' },
-  title: 'Privacy Policy & Cookie Disclosure | RenovationCalculator',
+  title: 'Privacy Policy & Cookie Disclosure',
   description:
     'RenovationCalculator privacy policy explaining our client-side processing, cookie usage, advertising partners, and data handling standards.',
 };

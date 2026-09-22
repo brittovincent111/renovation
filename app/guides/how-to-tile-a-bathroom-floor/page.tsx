@@ -2,18 +2,55 @@ import React from 'react';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { AdSlot } from '@/components/AdSlot';
-import { ChevronRight, Calculator, CheckCircle2, AlertTriangle, BookOpen, Clock } from 'lucide-react';
+import { GuideByline } from '@/components/GuideByline';
+import { ArticleJsonLd, BreadcrumbJsonLd } from '@/components/JsonLd';
+import { getGuide } from '@/lib/guidesData';
+import { SITE_URL } from '@/lib/siteIdentity';
+import { ChevronRight, Calculator, CheckCircle2, AlertTriangle, BookOpen } from 'lucide-react';
 
 export const metadata: Metadata = {
   alternates: { canonical: 'https://renovationcalculator.online/guides/how-to-tile-a-bathroom-floor' },
-  title: 'How to Tile a Bathroom Floor (Step-by-Step DIY Guide) | RenovationCalculator',
+  title: 'How to Tile a Bathroom Floor (Step-by-Step DIY Guide)',
   description:
     'Complete step-by-step guide to tiling a bathroom floor. Subfloor preparation, cement backer board, waterproofing membrane, thinset mortar selection, tile laying, and stain-resistant grouting.',
+  openGraph: {
+    title: 'How to Tile a Bathroom Floor (Step-by-Step DIY Guide)',
+    description: 'Complete step-by-step guide to tiling a bathroom floor. Subfloor preparation, cement backer board, waterproofing membrane, thinset mortar selection, tile laying, and stain-resistant grouting.',
+    url: 'https://renovationcalculator.online/guides/how-to-tile-a-bathroom-floor',
+    type: 'article',
+    siteName: 'RenovationCalculator',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'How to Tile a Bathroom Floor (Step-by-Step DIY Guide)',
+    description: 'Complete step-by-step guide to tiling a bathroom floor. Subfloor preparation, cement backer board, waterproofing membrane, thinset mortar selection, tile laying, and stain-resistant grouting.',
+  },
 };
 
 export default function TileBathroomFloorGuide() {
+  // Single registry entry drives the byline, the Article schema and the sitemap,
+  // so a guide's dates can no longer disagree between them.
+  const guide = getGuide('how-to-tile-a-bathroom-floor')!;
+  const url = `${SITE_URL}/guides/how-to-tile-a-bathroom-floor`;
+
   return (
     <article className="min-h-screen bg-white text-[#263238] pb-20">
+      <ArticleJsonLd
+        headline={guide.title}
+        description={guide.description}
+        url={url}
+        datePublished={guide.datePublished}
+        dateModified={guide.dateModified}
+        authorId={guide.authorId}
+        section={guide.category}
+      />
+      <BreadcrumbJsonLd
+        crumbs={[
+          { name: 'Home', path: '/' },
+          { name: 'Guides', path: '/guides' },
+          { name: guide.title },
+        ]}
+      />
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10 md:py-16">
         {/* Breadcrumb */}
         <nav className="mb-6 flex items-center gap-2 text-xs text-charcoal-400">
@@ -32,11 +69,7 @@ export default function TileBathroomFloorGuide() {
           <h1 className="mt-4 text-3xl sm:text-5xl font-extrabold tracking-tight text-[#263238] leading-tight">
             How to Tile a Bathroom Floor: The Professional Step-by-Step Method
           </h1>
-          <div className="mt-4 flex items-center gap-4 text-xs text-charcoal-400 font-medium">
-            <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> 8 min read</span>
-            <span>•</span>
-            <span>Updated for 2026 TCNA Standards</span>
-          </div>
+          <GuideByline guide={guide} />
         </header>
 
         {/* Integrated Quick Tools Box */}
@@ -91,7 +124,7 @@ export default function TileBathroomFloorGuide() {
           </section>
 
           {/* Ad Slot Inline */}
-          <AdSlot position="guide-inline" />
+          <AdSlot position="guide-inline" slotKey="guide-tile-inline-1" />
 
           <section>
             <h2 className="text-xl sm:text-2xl font-bold text-[#263238] mb-3">

@@ -92,6 +92,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     alternates: {
       canonical: canonicalUrl,
     },
+    // Measured against their parent, these variants share 54-62% of their text:
+    // the same widget, headings and layout, differing only in a short regional
+    // explanation and FAQ block. Indexing 39 of them tripled the URL count with
+    // near-duplicates, which is precisely the "scaled content" pattern that gets
+    // a site classified as thin. They stay fully usable for readers who land on
+    // them or switch region, but they no longer compete with the parent page.
+    // `follow` keeps their internal links flowing equity back to the originals.
+    //
+    // Self-referencing canonical, deliberately: pointing the canonical at the
+    // parent while also sending noindex sends Google two contradictory
+    // instructions about the same URL.
+    robots: {
+      index: false,
+      follow: true,
+      googleBot: { index: false, follow: true },
+    },
     openGraph: {
       title,
       description,

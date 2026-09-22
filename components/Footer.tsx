@@ -113,8 +113,18 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/editorial-policy" className="text-charcoal-600 hover:text-terracotta transition-colors">
+                  Editorial &amp; Methodology Policy
+                </Link>
+              </li>
+              <li>
                 <Link href="/privacy-policy" className="text-charcoal-600 hover:text-terracotta transition-colors">
                   Privacy Policy & Cookies
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="text-charcoal-600 hover:text-terracotta transition-colors">
+                  Terms of Service & Disclaimer
                 </Link>
               </li>
               <li>

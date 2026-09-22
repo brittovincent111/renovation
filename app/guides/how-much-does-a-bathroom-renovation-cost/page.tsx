@@ -2,18 +2,55 @@ import React from 'react';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { AdSlot } from '@/components/AdSlot';
-import { ChevronRight, Calculator, DollarSign, Clock, CheckCircle2 } from 'lucide-react';
+import { GuideByline } from '@/components/GuideByline';
+import { ArticleJsonLd, BreadcrumbJsonLd } from '@/components/JsonLd';
+import { getGuide } from '@/lib/guidesData';
+import { SITE_URL } from '@/lib/siteIdentity';
+import { ChevronRight, Calculator, DollarSign, CheckCircle2 } from 'lucide-react';
 
 export const metadata: Metadata = {
   alternates: { canonical: 'https://renovationcalculator.online/guides/how-much-does-a-bathroom-renovation-cost' },
-  title: 'How Much Does a Bathroom Renovation Cost in 2026? (Real Cost Breakdown) | RenovationCalculator',
+  title: 'How Much Does a Bathroom Renovation Cost in 2026? (Real Cost Breakdown)',
   description:
     'Comprehensive 2026 cost breakdown for bathroom renovations. Compare budget DIY ($4,000–$8,000), mid-range ($12,000–$22,000), and luxury custom ($30,000+) material and labor expenses.',
+  openGraph: {
+    title: 'How Much Does a Bathroom Renovation Cost in 2026? (Real Cost Breakdown)',
+    description: 'Comprehensive 2026 cost breakdown for bathroom renovations. Compare budget DIY ($4,000–$8,000), mid-range ($12,000–$22,000), and luxury custom ($30,000+) material and labor expenses.',
+    url: 'https://renovationcalculator.online/guides/how-much-does-a-bathroom-renovation-cost',
+    type: 'article',
+    siteName: 'RenovationCalculator',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'How Much Does a Bathroom Renovation Cost in 2026? (Real Cost Breakdown)',
+    description: 'Comprehensive 2026 cost breakdown for bathroom renovations. Compare budget DIY ($4,000–$8,000), mid-range ($12,000–$22,000), and luxury custom ($30,000+) material and labor expenses.',
+  },
 };
 
 export default function BathroomRenovationCostGuide() {
+  // Single registry entry drives the byline, the Article schema and the sitemap,
+  // so a guide's dates can no longer disagree between them.
+  const guide = getGuide('how-much-does-a-bathroom-renovation-cost')!;
+  const url = `${SITE_URL}/guides/how-much-does-a-bathroom-renovation-cost`;
+
   return (
     <article className="min-h-screen bg-white text-[#263238] pb-20">
+      <ArticleJsonLd
+        headline={guide.title}
+        description={guide.description}
+        url={url}
+        datePublished={guide.datePublished}
+        dateModified={guide.dateModified}
+        authorId={guide.authorId}
+        section={guide.category}
+      />
+      <BreadcrumbJsonLd
+        crumbs={[
+          { name: 'Home', path: '/' },
+          { name: 'Guides', path: '/guides' },
+          { name: guide.title },
+        ]}
+      />
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10 md:py-16">
         {/* Breadcrumb */}
         <nav className="mb-6 flex items-center gap-2 text-xs text-charcoal-400">
@@ -32,11 +69,7 @@ export default function BathroomRenovationCostGuide() {
           <h1 className="mt-4 text-3xl sm:text-5xl font-extrabold tracking-tight text-[#263238] leading-tight">
             How Much Does a Bathroom Renovation Cost in 2026?
           </h1>
-          <div className="mt-4 flex items-center gap-4 text-xs text-charcoal-400 font-medium">
-            <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> 10 min read</span>
-            <span>•</span>
-            <span>Real Contractor & DIY Budget Benchmarks</span>
-          </div>
+          <GuideByline guide={guide} />
         </header>
 
         {/* Quick Tools Box */}
@@ -95,7 +128,7 @@ export default function BathroomRenovationCostGuide() {
             </div>
           </section>
 
-          <AdSlot position="guide-inline" />
+          <AdSlot position="guide-inline" slotKey="guide-cost-inline-1" />
 
           <section>
             <h2 className="text-xl sm:text-2xl font-bold text-[#263238] mb-3">
