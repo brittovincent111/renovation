@@ -3,7 +3,7 @@
  *
  * AdSense requires an ads.txt at the domain root; without it Google reports
  * "Earnings at risk" and restricts programmatic demand. Generating it from the
- * same constant the ad units read means it cannot drift from the publisher ID
+ * same env var the ad units read means it cannot drift from the publisher ID
  * actually serving the ads.
  *
  * GET handlers default to dynamic since Next 15, so force-static prerenders
