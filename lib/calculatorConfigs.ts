@@ -1,5 +1,6 @@
 import { UnitSystem, CalculationResult, FAQItem, CalculatorMeta } from './types';
 import { EXTENDED_CONFIGS } from './calculatorConfigs.extended';
+import { INDIA_CONFIGS } from './calculatorConfigs.india';
 import { calculateTile } from './calculators/tile';
 import { calculatePaint } from './calculators/paint';
 import { calculateConcrete } from './calculators/concrete';
@@ -1138,6 +1139,9 @@ export function getCalculatorConfig(slug: string): CalculatorConfig {
   }
   if (EXTENDED_CONFIGS[slug]) {
     return EXTENDED_CONFIGS[slug];
+  }
+  if (INDIA_CONFIGS[slug]) {
+    return INDIA_CONFIGS[slug];
   }
 
   // Smart dynamic builder for any long-tail calculator

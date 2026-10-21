@@ -542,6 +542,31 @@ export const ALL_CALCULATORS: CalculatorMeta[] = [
     keywords: ['home renovation loan calculator', 'renovation loan calculator', 'home improvement loan payment', 'heloc renovation calculator', 'home remodel financing calculator'],
     iconName: 'FileText',
   },
+  // --- India-first cluster ---
+  // Written rupee- and square-foot-first for a market the large US calculator
+  // sites do not serve. This is where the site can realistically rank.
+  {
+    id: 'house-construction-cost',
+    slug: 'house-construction-cost-calculator',
+    name: 'House Construction Cost Calculator (India)',
+    shortName: 'House Construction',
+    category: 'Structures',
+    description:
+      'Estimate the cost of building a house in India with city-wise rates per square foot, specification tiers, and a full work-head breakdown you can check a builder quote against.',
+    metaTitle: 'House Construction Cost Calculator India 2026 — Cost Per Sq Ft by City',
+    metaDescription:
+      'Free house construction cost calculator for India. City-wise rates per sq ft for Bangalore, Chennai, Hyderabad, Mumbai, Pune, Delhi NCR and more, with a full cost breakdown by work head.',
+    keywords: [
+      'house construction cost calculator',
+      'construction cost per sq ft india',
+      'house construction cost in bangalore',
+      'building cost calculator india',
+      'cost to build a house in india',
+      'g+1 house construction cost',
+      'civil construction rate per square feet',
+    ],
+    iconName: 'Home',
+  }
 ];
 
 export const CATEGORIES: CalculatorCategory[] = [
@@ -556,6 +581,44 @@ export const CATEGORIES: CalculatorCategory[] = [
 
 export function getCalculatorBySlug(slug: string): CalculatorMeta | undefined {
   return ALL_CALCULATORS.find((c) => c.slug === slug);
+}
+
+/**
+ * Calculators the footer links sitewide.
+ *
+ * The footer previously rendered all 45 calculators on every page, including
+ * the privacy policy. That made every calculator link sitewide boilerplate,
+ * which Google discounts heavily, and flattened the internal link graph so
+ * completely that no page could signal any calculator mattered more than
+ * another — an audit found 54 of 65 pages with zero contextual in-links, which
+ * is a direct contributor to "Crawled - currently not indexed".
+ *
+ * A short curated list restores the signal: these few get deliberate sitewide
+ * emphasis, and every other calculator earns its links contextually through
+ * RelatedCalculators, the guides and the project estimators, where they vary
+ * per page and therefore actually count. The full index lives on the homepage,
+ * which is the right place for it.
+ */
+export const FOOTER_FEATURED_SLUGS: string[] = [
+  'tile-calculator',
+  'paint-calculator',
+  'concrete-calculator',
+  'flooring-calculator',
+  'drywall-calculator',
+  'roofing-calculator',
+];
+
+/** Surfaced separately because the India cluster is the site's growth bet. */
+export const FOOTER_INDIA_SLUGS: string[] = [
+  'house-construction-cost-calculator',
+  'false-ceiling-calculator',
+  'home-renovation-loan-calculator',
+];
+
+export function getCalculatorsBySlugs(slugs: string[]): CalculatorMeta[] {
+  return slugs
+    .map((slug) => ALL_CALCULATORS.find((c) => c.slug === slug))
+    .filter((c): c is CalculatorMeta => Boolean(c));
 }
 
 export function getRelatedCalculators(currentSlug: string, count: number = 6): CalculatorMeta[] {
