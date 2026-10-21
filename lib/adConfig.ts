@@ -6,11 +6,8 @@
  * Slots set to `false` render nothing (`null`) and introduce zero DOM or layout impact.
  */
 
-/**
- * AdSense publisher ID, from the build environment — shared by the loader
- * script, every ad unit and ads.txt. Unset renders no ads at all.
- */
-export const AD_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+/** AdSense publisher ID — shared by the loader script, every ad unit and ads.txt. */
+export const AD_CLIENT = 'ca-pub-9988977582918752';
 
 export type AdSlotKey =
   // --- Existing Core Slots (Active) ---
