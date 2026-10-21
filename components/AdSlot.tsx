@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { AdSlotKey, isAdSlotEnabled } from '@/lib/adConfig';
+import { AD_CLIENT, AdSlotKey, isAdSlotEnabled } from '@/lib/adConfig';
 
 declare global {
   interface Window {
@@ -42,7 +42,7 @@ export function AdSlot({ position, className = '', slotKey }: AdSlotProps) {
   const pushedRef = useRef(false);
 
   const isEnabled = !slotKey || isAdSlotEnabled(slotKey);
-  const clientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+  const clientId = AD_CLIENT;
 
   // Resolve slot ID per position
   const slotId = (() => {

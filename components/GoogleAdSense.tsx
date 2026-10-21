@@ -1,7 +1,7 @@
+import { AD_CLIENT } from '@/lib/adConfig';
+
 export function GoogleAdSense() {
-  // No hardcoded fallback: an unset publisher ID must render nothing rather
-  // than silently serving against a baked-in account.
-  const clientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+  const clientId = AD_CLIENT;
 
   if (!clientId || clientId.includes('XXXXXXXXXXXXXXXX')) {
     return null;

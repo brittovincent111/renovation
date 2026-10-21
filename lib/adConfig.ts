@@ -6,6 +6,9 @@
  * Slots set to `false` render nothing (`null`) and introduce zero DOM or layout impact.
  */
 
+/** AdSense publisher ID — shared by the loader script, every ad unit and ads.txt. */
+export const AD_CLIENT = 'ca-pub-9988977582918752';
+
 export type AdSlotKey =
   // --- Existing Core Slots (Active) ---
   | 'calculator-top'
