@@ -10,11 +10,11 @@ import { ChevronRight, Calculator, CheckCircle2 } from 'lucide-react';
 
 export const metadata: Metadata = {
   alternates: { canonical: 'https://renovationcalculator.online/guides/kitchen-remodel-cost-guide' },
-  title: 'How Much Does a Kitchen Remodel Cost in 2026? (Complete Breakdown)',
+  title: 'How Much Does a Kitchen Remodel Cost in 2026?',
   description:
-    'Comprehensive 2026 kitchen remodel cost guide. Detailed breakdown of cabinetry, quartz countertops, plumbing, electrical, flooring, and labor for minor, mid-range, and luxury projects.',
+    'Kitchen remodel costs for 2026: cabinetry, quartz worktops, plumbing, electrical and labour across minor, mid-range and luxury projects.',
   openGraph: {
-    title: 'How Much Does a Kitchen Remodel Cost in 2026? (Complete Breakdown)',
+    title: 'How Much Does a Kitchen Remodel Cost in 2026?',
     description: 'Comprehensive 2026 kitchen remodel cost guide. Detailed breakdown of cabinetry, quartz countertops, plumbing, electrical, flooring, and labor for minor, mid-range, and luxury projects.',
     url: 'https://renovationcalculator.online/guides/kitchen-remodel-cost-guide',
     type: 'article',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'How Much Does a Kitchen Remodel Cost in 2026? (Complete Breakdown)',
+    title: 'How Much Does a Kitchen Remodel Cost in 2026?',
     description: 'Comprehensive 2026 kitchen remodel cost guide. Detailed breakdown of cabinetry, quartz countertops, plumbing, electrical, flooring, and labor for minor, mid-range, and luxury projects.',
   },
 };
@@ -48,7 +48,7 @@ export default function KitchenRemodelCostGuidePage() {
         crumbs={[
           { name: 'Home', path: '/' },
           { name: 'Guides', path: '/guides' },
-          { name: guide.title },
+          { name: guide.title, path: url },
         ]}
       />
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10 md:py-16">

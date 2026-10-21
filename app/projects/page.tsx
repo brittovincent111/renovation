@@ -7,7 +7,7 @@ import { getCalculatorBySlug } from '@/lib/calculatorList';
 
 export const metadata: Metadata = {
   alternates: { canonical: 'https://renovationcalculator.online/projects' },
-  title: 'Project Combo Calculators — Full Renovation Material Estimators',
+  title: 'Project Combo Estimators',
   description:
     'Plan full remodels with zero repetitive entry. Enter dimensions once to size all tiles, paint, drywall, flooring, and fasteners across bathroom, kitchen, deck, basement, and patio projects.',
 };

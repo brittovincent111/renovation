@@ -86,7 +86,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const canonicalUrl = `https://renovationcalculator.online/calculators/${calc.slug}/${region}`;
 
   return {
-    title,
+    title: { absolute: title },
     description,
     keywords: [...calc.keywords, `${calc.shortName.toLowerCase()} calculator ${region}`, `${calc.shortName.toLowerCase()} calculator metric`],
     alternates: {

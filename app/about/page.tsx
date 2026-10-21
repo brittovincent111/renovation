@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://renovationcalculator.online/about' },
   // The root layout template appends " | RenovationCalculator", so repeating the
   // brand here produced "About RenovationCalculator ... | RenovationCalculator".
-  title: 'About Us — Engineering Standards & Estimating Methodology',
+  title: 'About Our Estimating Methodology',
   description:
     'Learn about RenovationCalculator, our editorial standards, engineering benchmarks (ASTM, TCNA, IRC, IS 456, BS 5385), and our commitment to 100% free, client-side construction estimators.',
 };

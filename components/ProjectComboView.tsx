@@ -91,7 +91,7 @@ export function ProjectComboView({ slug }: ProjectComboViewProps) {
         crumbs={[
           { name: 'Home', path: '/' },
           { name: 'Projects', path: '/projects' },
-          { name: project.shortTitle },
+          { name: project.shortTitle, path: currentUrl },
         ]}
       />
 

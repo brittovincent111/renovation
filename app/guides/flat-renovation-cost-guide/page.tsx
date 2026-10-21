@@ -10,9 +10,9 @@ import { ChevronRight, Calculator, CheckCircle2, IndianRupee, Layers, Home, Spar
 
 export const metadata: Metadata = {
   alternates: { canonical: 'https://renovationcalculator.online/guides/flat-renovation-cost-guide' },
-  title: 'Flat Renovation Cost: 1BHK, 2BHK & 3BHK Cost Per Sq Ft Guide (2026)',
+  title: 'Flat Renovation Cost: 1BHK, 2BHK & 3BHK Per Sq Ft',
   description:
-    'Complete guide to flat renovation costs in 2026. Detailed 1BHK, 2BHK, and 3BHK renovation costs per square foot in India, modular kitchen prices, bathroom renovation costs, and false ceiling rates.',
+    'Flat renovation cost in India: 1BHK, 2BHK and 3BHK rates per sq ft, modular kitchen prices, bathroom waterproofing and false ceiling costs for 2026.',
   keywords: [
     'flat renovation cost',
     '2bhk renovation cost',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     'home renovation loan calculator',
   ],
   openGraph: {
-    title: 'Flat Renovation Cost: 1BHK, 2BHK & 3BHK Cost Per Sq Ft Guide (2026)',
+    title: 'Flat Renovation Cost: 1BHK, 2BHK & 3BHK Per Sq Ft',
     description: 'Complete guide to flat renovation costs in 2026. Detailed 1BHK, 2BHK, and 3BHK renovation costs per square foot in India, modular kitchen prices, bathroom renovation costs, and false ceiling rates.',
     url: 'https://renovationcalculator.online/guides/flat-renovation-cost-guide',
     type: 'article',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Flat Renovation Cost: 1BHK, 2BHK & 3BHK Cost Per Sq Ft Guide (2026)',
+    title: 'Flat Renovation Cost: 1BHK, 2BHK & 3BHK Per Sq Ft',
     description: 'Complete guide to flat renovation costs in 2026. Detailed 1BHK, 2BHK, and 3BHK renovation costs per square foot in India, modular kitchen prices, bathroom renovation costs, and false ceiling rates.',
   },
 };
@@ -88,7 +88,7 @@ export default function FlatRenovationCostGuidePage() {
         crumbs={[
           { name: 'Home', path: '/' },
           { name: 'Guides', path: '/guides' },
-          { name: guide.title },
+          { name: guide.title, path: url },
         ]}
       />
 

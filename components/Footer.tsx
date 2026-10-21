@@ -1,6 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
-import { ALL_CALCULATORS, CATEGORIES } from '@/lib/calculatorList';
+import {
+  ALL_CALCULATORS,
+  FOOTER_FEATURED_SLUGS,
+  FOOTER_INDIA_SLUGS,
+  getCalculatorsBySlugs,
+} from '@/lib/calculatorList';
 import { BrandLogo } from './BrandLogo';
 import { ShieldCheck } from 'lucide-react';
 
@@ -23,65 +28,59 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Calculator Categories */}
-          <div className="md:col-span-2 grid grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Featured calculators only.
+              Linking all 45 here made every calculator link sitewide
+              boilerplate; the full index lives on the homepage. */}
+          <div className="md:col-span-2 grid grid-cols-2 gap-6">
             <div>
               <h4 className="text-xs font-bold uppercase tracking-wider text-[#263238] mb-3">
-                Flooring & Walls
+                Popular Calculators
               </h4>
               <ul className="space-y-2 text-xs">
-                {ALL_CALCULATORS.filter((c) =>
-                  ['Flooring & Tiling', 'Painting & Walls'].includes(c.category)
-                ).map((calc) => (
+                {getCalculatorsBySlugs(FOOTER_FEATURED_SLUGS).map((calc) => (
                   <li key={calc.slug}>
                     <Link
                       href={`/calculators/${calc.slug}`}
                       className="text-charcoal-600 hover:text-terracotta transition-colors"
                     >
-                      {calc.name}
+                      {calc.shortName}
                     </Link>
                   </li>
                 ))}
+                <li className="pt-1">
+                  <Link
+                    href="/#calculators"
+                    className="font-semibold text-terracotta hover:text-terracotta-700 transition-colors"
+                  >
+                    Browse all {ALL_CALCULATORS.length} calculators →
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div>
               <h4 className="text-xs font-bold uppercase tracking-wider text-[#263238] mb-3">
-                Exterior & Structure
+                India Cost Tools
               </h4>
               <ul className="space-y-2 text-xs">
-                {ALL_CALCULATORS.filter((c) =>
-                  ['Concrete & Masonry', 'Landscaping', 'Structures'].includes(c.category)
-                ).map((calc) => (
+                {getCalculatorsBySlugs(FOOTER_INDIA_SLUGS).map((calc) => (
                   <li key={calc.slug}>
                     <Link
                       href={`/calculators/${calc.slug}`}
                       className="text-charcoal-600 hover:text-terracotta transition-colors"
                     >
-                      {calc.name}
+                      {calc.shortName}
                     </Link>
                   </li>
                 ))}
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#263238] mb-3">
-                Systems &amp; Trades
-              </h4>
-              <ul className="space-y-2 text-xs">
-                {ALL_CALCULATORS.filter((c) =>
-                  ['Mechanical & Roof', 'Electrical & Trades'].includes(c.category)
-                ).map((calc) => (
-                  <li key={calc.slug}>
-                    <Link
-                      href={`/calculators/${calc.slug}`}
-                      className="text-charcoal-600 hover:text-terracotta transition-colors"
-                    >
-                      {calc.name}
-                    </Link>
-                  </li>
-                ))}
+                <li>
+                  <Link
+                    href="/guides/flat-renovation-cost-guide"
+                    className="text-charcoal-600 hover:text-terracotta transition-colors"
+                  >
+                    Flat Renovation Cost (1/2/3 BHK)
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>

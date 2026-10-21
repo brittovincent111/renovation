@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://renovationcalculator.online/guides/how-to-tile-a-bathroom-floor' },
   title: 'How to Tile a Bathroom Floor (Step-by-Step DIY Guide)',
   description:
-    'Complete step-by-step guide to tiling a bathroom floor. Subfloor preparation, cement backer board, waterproofing membrane, thinset mortar selection, tile laying, and stain-resistant grouting.',
+    'Step-by-step bathroom floor tiling: subfloor prep, backer board, waterproofing membrane, thinset selection, tile laying and stain-resistant grouting.',
   openGraph: {
     title: 'How to Tile a Bathroom Floor (Step-by-Step DIY Guide)',
     description: 'Complete step-by-step guide to tiling a bathroom floor. Subfloor preparation, cement backer board, waterproofing membrane, thinset mortar selection, tile laying, and stain-resistant grouting.',
@@ -48,7 +48,7 @@ export default function TileBathroomFloorGuide() {
         crumbs={[
           { name: 'Home', path: '/' },
           { name: 'Guides', path: '/guides' },
-          { name: guide.title },
+          { name: guide.title, path: url },
         ]}
       />
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10 md:py-16">

@@ -73,8 +73,10 @@ export function CalculatorLayout({
         faqs={faqs}
         crumbs={[
           { name: 'Home', path: '/' },
-          { name: category },
-          { name },
+          // `category` stays in the visual trail below but out of the schema:
+          // it has no page of its own, and a ListItem without a resolvable
+          // item is rejected by Google.
+          { name, path: currentUrl },
         ]}
       />
 

@@ -10,11 +10,11 @@ import { ChevronRight, Calculator, DollarSign, CheckCircle2 } from 'lucide-react
 
 export const metadata: Metadata = {
   alternates: { canonical: 'https://renovationcalculator.online/guides/how-much-does-a-bathroom-renovation-cost' },
-  title: 'How Much Does a Bathroom Renovation Cost in 2026? (Real Cost Breakdown)',
+  title: 'How Much Does a Bathroom Renovation Cost in 2026?',
   description:
-    'Comprehensive 2026 cost breakdown for bathroom renovations. Compare budget DIY ($4,000–$8,000), mid-range ($12,000–$22,000), and luxury custom ($30,000+) material and labor expenses.',
+    'Bathroom renovation costs for 2026: budget DIY ($4,000–$8,000), mid-range ($12,000–$22,000) and luxury ($30,000+) material and labour breakdowns.',
   openGraph: {
-    title: 'How Much Does a Bathroom Renovation Cost in 2026? (Real Cost Breakdown)',
+    title: 'How Much Does a Bathroom Renovation Cost in 2026?',
     description: 'Comprehensive 2026 cost breakdown for bathroom renovations. Compare budget DIY ($4,000–$8,000), mid-range ($12,000–$22,000), and luxury custom ($30,000+) material and labor expenses.',
     url: 'https://renovationcalculator.online/guides/how-much-does-a-bathroom-renovation-cost',
     type: 'article',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'How Much Does a Bathroom Renovation Cost in 2026? (Real Cost Breakdown)',
+    title: 'How Much Does a Bathroom Renovation Cost in 2026?',
     description: 'Comprehensive 2026 cost breakdown for bathroom renovations. Compare budget DIY ($4,000–$8,000), mid-range ($12,000–$22,000), and luxury custom ($30,000+) material and labor expenses.',
   },
 };
@@ -48,7 +48,7 @@ export default function BathroomRenovationCostGuide() {
         crumbs={[
           { name: 'Home', path: '/' },
           { name: 'Guides', path: '/guides' },
-          { name: guide.title },
+          { name: guide.title, path: url },
         ]}
       />
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10 md:py-16">

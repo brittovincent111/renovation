@@ -18,8 +18,17 @@ function Ld({ data }: { data: object }) {
 
 export interface Crumb {
   name: string;
-  /** Absolute or site-relative path. Omit on the final (current) crumb. */
-  path?: string;
+  /**
+   * Absolute URL or site-relative path. Required on every crumb.
+   *
+   * This was previously optional, omitted on the current page and on crumbs
+   * with no page of their own (a calculator's category). Search Console
+   * rejected those entries with `Missing field "item" (in "itemListElement")`,
+   * because every ListItem in a BreadcrumbList needs a resolvable item. Crumbs
+   * that have no URL now simply stay out of the structured data — they remain
+   * in the visual trail, which is where they were useful anyway.
+   */
+  path: string;
 }
 
 /**
@@ -39,9 +48,7 @@ export function BreadcrumbJsonLd({ crumbs }: { crumbs: Crumb[] }) {
           '@type': 'ListItem',
           position: i + 1,
           name: c.name,
-          ...(c.path
-            ? { item: c.path.startsWith('http') ? c.path : `${SITE_URL}${c.path}` }
-            : {}),
+          item: c.path.startsWith('http') ? c.path : `${SITE_URL}${c.path}`,
         })),
       }}
     />

@@ -27,7 +27,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const canonicalUrl = `https://renovationcalculator.online/calculators/${calc.slug}`;
 
   return {
-    title: calc.metaTitle,
+    // `absolute` bypasses the root layout's " | RenovationCalculator"
+    // suffix. These titles carry the page's keywords and were running to a
+    // median of 87 characters; the brand is the least valuable 23 of them
+    // while the site has no name recognition to trade on.
+    title: { absolute: calc.metaTitle },
     description: calc.metaDescription,
     keywords: calc.keywords,
     alternates: {

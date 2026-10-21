@@ -65,8 +65,8 @@ export default function GuidesDirectoryPage() {
                 <div className="flex flex-wrap gap-1.5">
                   {guide.linkedCalculators.map((calc) => (
                     <Link
-                      key={calc.slug}
-                      href={calc.slug.startsWith('projects/') ? `/${calc.slug}` : `/calculators/${calc.slug}`}
+                      key={calc.href}
+                      href={calc.href}
                       className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-warm-100 text-[#263238] hover:text-terracotta hover:bg-warm-200 transition-colors"
                     >
                       {calc.name}

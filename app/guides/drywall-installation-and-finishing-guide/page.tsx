@@ -10,11 +10,11 @@ import { ChevronRight, Calculator, AlertTriangle } from 'lucide-react';
 
 export const metadata: Metadata = {
   alternates: { canonical: 'https://renovationcalculator.online/guides/drywall-installation-and-finishing-guide' },
-  title: 'Drywall Installation & Finishing Estimating Guide (Hanging to Level 5)',
+  title: 'Drywall Installation & Finishing Guide',
   description:
-    'Comprehensive step-by-step drywall hanging and finishing guide. Sheet selection (1/2" vs 5/8" Type X), screw layout spacing, joint taping, mudding coats, and GA-214 Level 5 finish standards.',
+    'Step-by-step drywall hanging and finishing: 1/2" vs 5/8" Type X sheet selection, ASTM screw spacing, taping, mudding coats and GA-214 Level 5 finish.',
   openGraph: {
-    title: 'Drywall Installation & Finishing Estimating Guide (Hanging to Level 5)',
+    title: 'Drywall Installation & Finishing Guide',
     description: 'Comprehensive step-by-step drywall hanging and finishing guide. Sheet selection (1/2" vs 5/8" Type X), screw layout spacing, joint taping, mudding coats, and GA-214 Level 5 finish standards.',
     url: 'https://renovationcalculator.online/guides/drywall-installation-and-finishing-guide',
     type: 'article',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Drywall Installation & Finishing Estimating Guide (Hanging to Level 5)',
+    title: 'Drywall Installation & Finishing Guide',
     description: 'Comprehensive step-by-step drywall hanging and finishing guide. Sheet selection (1/2" vs 5/8" Type X), screw layout spacing, joint taping, mudding coats, and GA-214 Level 5 finish standards.',
   },
 };
@@ -48,7 +48,7 @@ export default function DrywallGuidePage() {
         crumbs={[
           { name: 'Home', path: '/' },
           { name: 'Guides', path: '/guides' },
-          { name: guide.title },
+          { name: guide.title, path: url },
         ]}
       />
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10 md:py-16">

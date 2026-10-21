@@ -12,7 +12,18 @@
 
 export interface GuideLink {
   name: string;
-  slug: string;
+  /**
+   * Full site-relative path, e.g. "/calculators/tile-calculator".
+   *
+   * This was previously a bare `slug` that callers prefixed with
+   * "/calculators/". Entries had drifted into three incompatible shapes —
+   * "tile-calculator", "calculators/tile-calculator" and
+   * "projects/house-renovation-cost" — and the guides index only special-cased
+   * the "projects/" form, so the prefixed calculator entries rendered as
+   * /calculators/calculators/... and 404'd. Nine live broken links came from
+   * this. Storing the whole path removes the guesswork.
+   */
+  href: string;
 }
 
 export interface Guide {
@@ -47,9 +58,9 @@ export const GUIDES: Guide[] = [
       'Master substrate prep, uncoupling membranes, thinset mortar trowel selection, tile layout grid centering, and stain-resistant grouting without lippage.',
     standards: ['TCNA Handbook (F144, B421)', 'ANSI A108.1', 'ASTM C627'],
     linkedCalculators: [
-      { name: 'Tile Calculator', slug: 'tile-calculator' },
-      { name: 'Grout Calculator', slug: 'grout-calculator' },
-      { name: 'Tile Mortar Calculator', slug: 'tile-mortar-calculator' },
+      { name: 'Tile Calculator', href: '/calculators/tile-calculator' },
+      { name: 'Grout Calculator', href: '/calculators/grout-calculator' },
+      { name: 'Tile Mortar Calculator', href: '/calculators/tile-mortar-calculator' },
     ],
   },
   {
@@ -64,9 +75,9 @@ export const GUIDES: Guide[] = [
       'Detailed financial breakdown of DIY vs contractor costs across budget ($5,000), mid-grade ($15,000), and luxury ($30,000+) bathroom remodels. Where to splurge vs save.',
     standards: ['IRC Chapter 27 (plumbing)', 'TCNA Handbook'],
     linkedCalculators: [
-      { name: 'Bathroom Remodel Combo', slug: 'projects/bathroom-renovation-cost' },
-      { name: 'Paint Calculator', slug: 'paint-calculator' },
-      { name: 'Plumbing Pipe Sizing', slug: 'plumbing-pipe-calculator' },
+      { name: 'Bathroom Remodel Combo', href: '/projects/bathroom-renovation-cost' },
+      { name: 'Paint Calculator', href: '/calculators/paint-calculator' },
+      { name: 'Plumbing Pipe Sizing', href: '/calculators/plumbing-pipe-calculator' },
     ],
   },
   {
@@ -81,9 +92,9 @@ export const GUIDES: Guide[] = [
       'An objective comparison of upfront material costs, installation labor, durability, frost-heave cracking risk, and long-term resale value for poured concrete vs interlocking pavers.',
     standards: ['ASTM C936 (paving units)', 'ACI 330R (parking lot concrete)'],
     linkedCalculators: [
-      { name: 'Concrete Slab Calculator', slug: 'concrete-slab-calculator' },
-      { name: 'Paver Calculator', slug: 'paver-calculator' },
-      { name: 'Gravel Calculator', slug: 'gravel-calculator' },
+      { name: 'Concrete Slab Calculator', href: '/calculators/concrete-slab-calculator' },
+      { name: 'Paver Calculator', href: '/calculators/paver-calculator' },
+      { name: 'Gravel Calculator', href: '/calculators/gravel-calculator' },
     ],
   },
   {
@@ -98,10 +109,10 @@ export const GUIDES: Guide[] = [
       'Detailed 1BHK, 2BHK, and 3BHK renovation costs per square foot in India. Modular kitchen pricing, bathroom waterproofing, false ceiling rates, and painting budgets.',
     standards: ['IS 456 (concrete)', 'IS 2212 (brickwork)', 'CPWD DSR rates'],
     linkedCalculators: [
-      { name: 'House Renovation Cost', slug: 'projects/house-renovation-cost' },
-      { name: 'False Ceiling', slug: 'calculators/false-ceiling-calculator/india' },
-      { name: 'Renovation Loan', slug: 'calculators/home-renovation-loan-calculator' },
-      { name: 'Painting (India)', slug: 'calculators/paint-calculator/india' },
+      { name: 'House Renovation Cost', href: '/projects/house-renovation-cost' },
+      { name: 'False Ceiling', href: '/calculators/false-ceiling-calculator/india' },
+      { name: 'Renovation Loan', href: '/calculators/home-renovation-loan-calculator' },
+      { name: 'Painting (India)', href: '/calculators/paint-calculator/india' },
     ],
   },
   {
@@ -116,10 +127,10 @@ export const GUIDES: Guide[] = [
       'Full budget breakdown of cabinetry, quartz countertops, plumbing, electrical circuits, and labor for minor ($15k), mid-range ($35k), and custom ($80k+) kitchen remodels.',
     standards: ['NKBA planning guidelines', 'NEC 210.52 (small-appliance circuits)'],
     linkedCalculators: [
-      { name: 'Kitchen Remodel Combo', slug: 'projects/kitchen-renovation-cost' },
-      { name: 'Backsplash Tile', slug: 'calculators/tile-calculator' },
-      { name: 'Flooring', slug: 'calculators/flooring-calculator' },
-      { name: 'Cabinet Paint', slug: 'calculators/paint-calculator' },
+      { name: 'Kitchen Remodel Combo', href: '/projects/kitchen-renovation-cost' },
+      { name: 'Backsplash Tile', href: '/calculators/tile-calculator' },
+      { name: 'Flooring', href: '/calculators/flooring-calculator' },
+      { name: 'Cabinet Paint', href: '/calculators/paint-calculator' },
     ],
   },
   {
@@ -134,10 +145,10 @@ export const GUIDES: Guide[] = [
       'Master panel selection (1/2" vs 5/8" Type X), horizontal hanging strategy, ASTM screw spacing standards, mudding coat schedules, and GA-214 Level 5 finish criteria.',
     standards: ['ASTM C840', 'GA-214 (levels of finish)', 'IRC R702.3'],
     linkedCalculators: [
-      { name: 'Drywall Calculator', slug: 'calculators/drywall-calculator' },
-      { name: 'Wall Framing', slug: 'calculators/wall-framing-calculator' },
-      { name: 'PVA Primer & Paint', slug: 'calculators/paint-calculator' },
-      { name: 'Baseboards', slug: 'calculators/baseboard-calculator' },
+      { name: 'Drywall Calculator', href: '/calculators/drywall-calculator' },
+      { name: 'Wall Framing', href: '/calculators/wall-framing-calculator' },
+      { name: 'PVA Primer & Paint', href: '/calculators/paint-calculator' },
+      { name: 'Baseboards', href: '/calculators/baseboard-calculator' },
     ],
   },
 ];

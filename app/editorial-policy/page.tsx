@@ -16,7 +16,7 @@ import { ORGANIZATION, SITE_URL } from '@/lib/siteIdentity';
 
 export const metadata: Metadata = {
   alternates: { canonical: `${SITE_URL}/editorial-policy` },
-  title: 'Editorial & Methodology Policy — How We Research, Calculate and Correct',
+  title: 'Editorial & Methodology Policy',
   description:
     'How RenovationCalculator sources its formulas, which published standards each calculator is benchmarked against, how waste factors are chosen, our cost-data limitations, update cadence, and how to report an error.',
 };
@@ -55,7 +55,7 @@ export default function EditorialPolicyPage() {
       <BreadcrumbJsonLd
         crumbs={[
           { name: 'Home', path: '/' },
-          { name: 'Editorial & Methodology Policy' },
+          { name: 'Editorial & Methodology Policy', path: '/editorial-policy' },
         ]}
       />
 
